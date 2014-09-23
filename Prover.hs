@@ -47,15 +47,19 @@ match a b = evalState (matcher a b) $ M.fromList []
 
 -- Same but monadic function
 matcher :: Expr -> Expr -> State StmtMap Bool
-matcher (BinOp _ a1 a2) (BinOp _ b1 b2) =
+matcher (BinOp Impl a1 a2) (BinOp Impl b1 b2) =
   matcher a1 b1 `sAnd` matcher a2 b2
-matcher (UnOp _ a) (UnOp _ b) =
+matcher (BinOp Or a1 a2) (BinOp Or b1 b2) =
+  matcher a1 b1 `sAnd` matcher a2 b2
+matcher (BinOp And a1 a2) (BinOp And b1 b2) =
+  matcher a1 b1 `sAnd` matcher a2 b2
+matcher (UnOp LNot a) (UnOp LNot b) =
   matcher a b
-matcher a (Statement b) = do
-  i <- load b
+matcher (Statement a) b = do
+  i <- load a
   case i of
-    Nothing -> store b a >> return True
-    Just c -> if a == c
+    Nothing -> store a b >> return True
+    Just c -> if b == c
               then return True
               else return False
 
@@ -107,7 +111,26 @@ checkMP' _ _ = False
 -- add expr to Context &
 -- check if expr may be used for MP
 updContext :: Context -> Expr -> (Context, Int)
-updContext = undefined
+updContext c e = (contextMPUpd c e (length c), getExprMP c e 0)
+
+
+contextMPUpd :: Context -> Expr -> Int -> Context
+contextMPUpd (c:cx) e n = case expr c of
+  BinOp Impl a b -> if (a == e)
+                    then (Rule (expr c) n (current c)):(contextMPUpd cx e n)
+                    else c:(contextMPUpd cx e n)
+  _              -> c:(contextMPUpd cx e n)
+contextMPUpd [] _ _ = []
+
+getExprMP :: Context -> Expr -> Int -> Int
+getExprMP (c:cx) e n  = case e of
+  BinOp Impl a _ -> if (a == expr c)
+                      then n
+                      else getExprMP cx e $ n + 1
+  _                -> -1
+getExprMP [] _ _ = -1
+
+
 
 -------------------------------------------------------------------
 
