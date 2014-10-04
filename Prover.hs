@@ -90,7 +90,7 @@ findMP c e = findMP' c e 1
 -- The same as previous but with a number
 findMP' :: Context -> Expr -> Int -> Maybe (Int, Int)
 findMP' (r:xs) e n = if checkMP e r
-                     then Just (mP r, n)
+                     then Just ((mP r) + 1, n)
                      else findMP' xs e $ n + 1
 findMP' [] _ _ = Nothing
 
