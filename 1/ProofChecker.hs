@@ -2,13 +2,6 @@ import Syntax
 import Lexer
 import ProofCheckerLib
 
-verifLoop :: Context -> [Expr] -> Context
-verifLoop ctx (x:[])  = case runVerifier ctx x of
-  Right newCtx -> newCtx
-
-verifLoop ctx (x:xs) = case runVerifier ctx x of
-  Right newCtx -> verifLoop newCtx xs
-  Left _ -> verifLoop ctx xs
 
 parseProof :: [String] -> [Expr]
 parseProof [] = []

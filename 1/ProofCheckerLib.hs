@@ -164,3 +164,12 @@ verifier c e = case checkAxioms e of
   Nothing -> case findMP c e of
     Just (a, b) -> Right $ ModusPonens a b
     Nothing -> Right NoProof
+
+-- Functions gets context(m.b. empty) and list of expressions
+-- Iterates through list and return new context
+verifLoop :: Context -> [Expr] -> Context
+verifLoop ctx (x:[])  = case runVerifier ctx x of
+  Right newCtx -> newCtx
+verifLoop ctx (x:xs) = case runVerifier ctx x of
+  Right newCtx -> verifLoop newCtx xs
+  Left _ -> verifLoop ctx xs
