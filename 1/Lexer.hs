@@ -21,7 +21,12 @@ import Char (ord)
 {-# LINE 1 "templates/wrappers.hs" #-}
 {-# LINE 1 "<built-in>" #-}
 {-# LINE 1 "<command-line>" #-}
-{-# LINE 8 "<command-line>" #-}
+
+
+
+
+
+
 # 1 "/usr/include/stdc-predef.h" 1 3 4
 
 # 17 "/usr/include/stdc-predef.h" 3 4
@@ -67,7 +72,7 @@ import Char (ord)
 
 
 
-{-# LINE 8 "<command-line>" #-}
+{-# LINE 6 "<command-line>" #-}
 {-# LINE 1 "templates/wrappers.hs" #-}
 -- -----------------------------------------------------------------------------
 -- Alex wrapper code.
@@ -358,8 +363,6 @@ alex_action_7 =  \(p,_,_,s) len -> return $ RightParen
 
 
 
-
-
 # 1 "/usr/include/stdc-predef.h" 1 3 4
 
 # 17 "/usr/include/stdc-predef.h" 3 4
@@ -405,7 +408,7 @@ alex_action_7 =  \(p,_,_,s) len -> return $ RightParen
 
 
 
-{-# LINE 7 "<command-line>" #-}
+{-# LINE 5 "<command-line>" #-}
 {-# LINE 1 "templates/GenericTemplate.hs" #-}
 -- -----------------------------------------------------------------------------
 -- ALEX TEMPLATE

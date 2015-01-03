@@ -1,0 +1,355 @@
+	Sat Jan  3 17:42 2015 Time and Allocation Profiling Report  (Final)
+
+	   ProofChecker +RTS -pa -RTS
+
+	total time  =        7.45 secs   (7447 ticks @ 1000 us, 1 processor)
+	total alloc = 4,913,992,912 bytes  (excludes profiling overheads)
+
+COST CENTRE            MODULE                           %time %alloc  ticks     bytes
+
+parseProof             Main                              26.8   31.4   1995 1543235280
+==                     Syntax                            24.8   30.2   1849 1481753152
+GC                     GC                                17.8    0.0   1325      2224
+contextMPUpd           ProofCheckerLib                    6.0    6.3    448 307699680
+getExprMP              ProofCheckerLib                    5.1    7.2    381 352335096
+findMP'                ProofCheckerLib                    2.5    3.0    188 146372328
+expr                   ProofCheckerLib                    2.5    0.0    185         0
+checkMP                ProofCheckerLib                    2.3    3.7    174 179829272
+==                     Syntax                             2.1    0.0    153         0
+runVerifier            ProofCheckerLib                    1.5    5.5    113 269985464
+main                   Main                               1.4    3.6    104 174454128
+action_5               Syntax                             1.0    0.8     73  39858360
+mP                     ProofCheckerLib                    0.7    0.0     53         0
+show                   Syntax                             0.6    1.0     44  51265384
+checkMP'               ProofCheckerLib                    0.5    0.0     39         0
+putOut                 Main                               0.5    0.2     36   8783224
+sAnd                   ProofCheckerLib                    0.4    0.3     28  14975208
+action_9               Syntax                             0.3    0.3     23  15633816
+happyNewToken.cont     Syntax                             0.3    0.0     22         0
+SYSTEM                 SYSTEM                             0.3    4.5     21 221864056
+OVERHEAD_of            PROFILING                          0.3    0.0     19         0
+happyReduce_5          Syntax                             0.3    0.4     19  18753408
+action_4               Syntax                             0.2    0.3     18  14987008
+load                   ProofCheckerLib                    0.2    0.1     16   6046864
+happyNewToken          Syntax                             0.2    0.0     16         0
+==                     Syntax                             0.2    0.0     14         0
+store                  ProofCheckerLib                    0.1    0.1     10   3677808
+happyReduce_6          Syntax                             0.1    0.2     10   9573120
+matcher                ProofCheckerLib                    0.1    0.1      7   3029472
+updContext             ProofCheckerLib                    0.1    0.0      7     80536
+show                   Syntax                             0.1    0.2      7   9774320
+action_0               Syntax                             0.1    0.0      7   1810928
+show                   ProofCheckerLib                    0.1    0.3      6  15417696
+show                   ProofCheckerLib                    0.1    0.1      4   5592856
+action_7               Syntax                             0.1    0.1      4   3292080
+happyReduction_3       Syntax                             0.1    0.1      4   2842512
+action_10              Syntax                             0.0    0.0      3         0
+happyReduction_4       Syntax                             0.0    0.0      3   2341720
+happyReduction_5       Syntax                             0.0    0.0      3   2083712
+happyReduction_6       Syntax                             0.0    0.0      3   2393280
+checkAxioms'           ProofCheckerLib                    0.0    0.0      2    814368
+synt.happySomeParser   Syntax                             0.0    0.0      2    173656
+action_13              Syntax                             0.0    0.0      2         0
+happyReturn1           Syntax                             0.0    0.0      2         0
+verifLoop              Main                               0.0    0.0      1         0
+verifier               ProofCheckerLib                    0.0    0.0      1    111336
+match                  ProofCheckerLib                    0.0    0.0      1   1415840
+action_6               Syntax                             0.0    0.0      1    694624
+happyReturn1.\         Syntax                             0.0    0.0      1     49616
+IDLE                   IDLE                               0.0    0.0      0         0
+PINNED                 SYSTEM                             0.0    0.0      0         0
+DONT_CARE              MAIN                               0.0    0.0      0         0
+MAIN                   MAIN                               0.0    0.0      0       352
+CAF                    GHC.Integer.Type                   0.0    0.0      0         0
+CAF                    GHC.IO.Encoding.UTF32              0.0    0.0      0         0
+CAF                    GHC.IO.Encoding.UTF16              0.0    0.0      0         0
+CAF                    GHC.IO.Encoding.Failure            0.0    0.0      0         0
+CAF                    Foreign.Marshal.Alloc              0.0    0.0      0         0
+CAF                    GHC.IO.Handle.Types                0.0    0.0      0         0
+CAF                    GHC.IO.Encoding.Iconv              0.0    0.0      0       248
+CAF                    GHC.Event.PSQ                      0.0    0.0      0         0
+CAF                    GHC.Event.Manager                  0.0    0.0      0         0
+CAF                    GHC.Event.Control                  0.0    0.0      0         0
+CAF                    Data.Typeable.Internal             0.0    0.0      0         0
+CAF                    GHC.IO.FD                          0.0    0.0      0        32
+CAF                    GHC.ForeignPtr                     0.0    0.0      0         0
+CAF                    GHC.Event.Internal                 0.0    0.0      0         0
+CAF                    GHC.Event.EPoll                    0.0    0.0      0         0
+CAF                    GHC.Show                           0.0    0.0      0         0
+CAF                    GHC.List                           0.0    0.0      0         0
+CAF                    GHC.IO.Handle.Internals            0.0    0.0      0         0
+CAF                    GHC.IO.Handle                      0.0    0.0      0         0
+CAF                    GHC.IO.Encoding.UTF8               0.0    0.0      0         0
+CAF                    System.Posix.Internals             0.0    0.0      0         0
+CAF                    GHC.Word                           0.0    0.0      0         0
+CAF                    GHC.IO.Handle.Text                 0.0    0.0      0         0
+CAF                    GHC.IO.Encoding                    0.0    0.0      0      3376
+CAF                    GHC.IO                             0.0    0.0      0         0
+CAF                    GHC.Enum                           0.0    0.0      0         0
+CAF                    Data.Maybe                         0.0    0.0      0         0
+CAF                    GHC.TopHandler                     0.0    0.0      0         0
+CAF                    GHC.Read                           0.0    0.0      0         0
+CAF                    GHC.IO.Handle.FD                   0.0    0.0      0     52120
+CAF                    GHC.Exception                      0.0    0.0      0         0
+CAF                    GHC.Conc.Sync                      0.0    0.0      0         0
+CAF                    GHC.Conc.Signal                    0.0    0.0      0       672
+CAF                    GHC.Event.Thread                   0.0    0.0      0         0
+CAF                    Text.Read.Lex                      0.0    0.0      0         0
+CAF                    Text.ParserCombinators.ReadP       0.0    0.0      0         0
+CAF                    GHC.Arr                            0.0    0.0      0         0
+CAF                    Control.Exception.Base             0.0    0.0      0         0
+CAF                    GHC.IO.Exception                   0.0    0.0      0         0
+CAF                    GHC.Err                            0.0    0.0      0         0
+CAF                    Data.Map.Base                      0.0    0.0      0         0
+CAF                    Control.Monad.IO.Class             0.0    0.0      0         0
+CAF                    Data.Functor.Identity              0.0    0.0      0         0
+CAF                    Control.Monad.Trans.State.Strict   0.0    0.0      0         0
+CAF                    Control.Monad.Trans.State.Lazy     0.0    0.0      0         0
+CAF                    Control.Monad.Trans.RWS.Strict     0.0    0.0      0         0
+CAF                    Control.Monad.Trans.RWS.Lazy       0.0    0.0      0         0
+CAF                    Control.Monad.State.Class          0.0    0.0      0         0
+axioms                 Axioms                             0.0    0.0      0         0
+ax1                    Axioms                             0.0    0.0      0         0
+ax2                    Axioms                             0.0    0.0      0         0
+ax3                    Axioms                             0.0    0.0      0         0
+ax4                    Axioms                             0.0    0.0      0         0
+ax5                    Axioms                             0.0    0.0      0         0
+ax6                    Axioms                             0.0    0.0      0         0
+ax7                    Axioms                             0.0    0.0      0         0
+ax8                    Axioms                             0.0    0.0      0         0
+ax9                    Axioms                             0.0    0.0      0         0
+ax10                   Axioms                             0.0    0.0      0         0
+CAF                    Axioms                             0.0    0.0      0      3072
+CAF                    Main                               0.0    0.0      0       376
+reason                 ProofCheckerLib                    0.0    0.0      0         0
+runVerifier.n          ProofCheckerLib                    0.0    0.0      0         0
+runVerifier.c          ProofCheckerLib                    0.0    0.0      0         0
+runVerifier.(...)      ProofCheckerLib                    0.0    0.0      0    272888
+checkAxioms            ProofCheckerLib                    0.0    0.0      0         0
+findMP                 ProofCheckerLib                    0.0    0.0      0         0
+CAF                    ProofCheckerLib                    0.0    0.0      0       512
+CAF                    Lexer                              0.0    0.0      0      7392
+show                   Syntax                             0.0    0.0      0         0
+/=                     Syntax                             0.0    0.0      0         0
+/=                     Syntax                             0.0    0.0      0         0
+/=                     Syntax                             0.0    0.0      0         0
+synt                   Syntax                             0.0    0.0      0         0
+synt.happySomeParser.\ Syntax                             0.0    0.0      0     49616
+action_1               Syntax                             0.0    0.0      0         0
+action_2               Syntax                             0.0    0.0      0         0
+action_8               Syntax                             0.0    0.0      0         0
+action_15              Syntax                             0.0    0.0      0         0
+action_3               Syntax                             0.0    0.0      0         0
+action_11              Syntax                             0.0    0.0      0         0
+action_12              Syntax                             0.0    0.0      0         0
+action_14              Syntax                             0.0    0.0      0         0
+happyReduce_1          Syntax                             0.0    0.0      0         0
+happyReduction_1       Syntax                             0.0    0.0      0         0
+happyReduce_2          Syntax                             0.0    0.0      0         0
+happyReduction_2       Syntax                             0.0    0.0      0    598560
+happyReduce_3          Syntax                             0.0    0.0      0         0
+happyReduce_4          Syntax                             0.0    0.0      0         0
+happyError_            Syntax                             0.0    0.0      0         0
+happyThen              Syntax                             0.0    0.0      0         0
+happyReturn            Syntax                             0.0    0.0      0         0
+happyThen1             Syntax                             0.0    0.0      0         0
+happyThen1.\           Syntax                             0.0    0.0      0         0
+happyError'            Syntax                             0.0    0.0      0         0
+happySeq               Syntax                             0.0    0.0      0         0
+happyError             Syntax                             0.0    0.0      0         0
+CAF                    Syntax                             0.0    0.0      0       264
+
+
+                                                                                  individual     inherited
+COST CENTRE                  MODULE                             no.     entries  %time %alloc   %time %alloc  ticks     bytes
+
+MAIN                         MAIN                                60           0    0.0    0.0   100.0  100.0      0       352
+ CAF                         Syntax                             119           0    0.0    0.0     0.0    0.0      0       264
+  happyReduce_2              Syntax                             229           1    0.0    0.0     0.0    0.0      0         0
+  happyReduce_4              Syntax                             213           1    0.0    0.0     0.0    0.0      0         0
+  happyReturn                Syntax                             163           1    0.0    0.0     0.0    0.0      0         0
+  happyReturn1               Syntax                             154           1    0.0    0.0     0.0    0.0      0         0
+  happyReduce_5              Syntax                             144           1    0.0    0.0     0.0    0.0      0         0
+  happyReduce_3              Syntax                             140           1    0.0    0.0     0.0    0.0      0         0
+  happySeq                   Syntax                             134           1    0.0    0.0     0.0    0.0      0         0
+  happyReduce_6              Syntax                             132           1    0.0    0.0     0.0    0.0      0         0
+  happyThen                  Syntax                             126           1    0.0    0.0     0.0    0.0      0         0
+ CAF                         Lexer                              118           0    0.0    0.0     0.0    0.0      0      7392
+ CAF                         ProofCheckerLib                    117           0    0.0    0.0     0.0    0.0      0       512
+  sAnd                       ProofCheckerLib                    174           1    0.0    0.0     0.0    0.0      0         0
+ CAF                         Main                               116           0    0.0    0.0    81.7   95.5      0       376
+  main                       Main                               120           1    1.4    3.6    81.7   95.5    104 174454104
+   parseProof                Main                               123        3102   26.8   31.4    29.7   33.7   1995 1543235280
+    synt                     Syntax                             124        3101    0.0    0.0     2.9    2.3      0         0
+     synt.happySomeParser    Syntax                             125        3101    0.0    0.0     2.9    2.3      2    173656
+      synt.happySomeParser.\ Syntax                             157        3101    0.0    0.0     0.0    0.0      0     49616
+      happyNewToken          Syntax                             127      468587    0.2    0.0     2.9    2.3     16         0
+       happyReduce_5         Syntax                             151           0    0.0    0.0     0.1    0.0      1    446544
+        action_4             Syntax                             233           1    0.0    0.0     0.0    0.0      0       136
+         happyReduction_4    Syntax                             239           1    0.0    0.0     0.0    0.0      0        40
+         action_0            Syntax                             235           1    0.0    0.0     0.0    0.0      0       296
+          happyReturn1       Syntax                             237           0    0.0    0.0     0.0    0.0      0         0
+           happyReturn1.\    Syntax                             238           1    0.0    0.0     0.0    0.0      0        16
+          action_6           Syntax                             236           1    0.0    0.0     0.0    0.0      0       224
+         action_11           Syntax                             234           1    0.0    0.0     0.0    0.0      0         0
+        happyReduction_5     Syntax                             158        3101    0.0    0.0     0.0    0.0      0     49616
+        action_0             Syntax                             152        3100    0.1    0.0     0.1    0.0      4    917600
+         happyReturn1        Syntax                             155           0    0.0    0.0     0.0    0.0      2         0
+          happyReturn1.\     Syntax                             156        3100    0.0    0.0     0.0    0.0      1     49600
+         action_6            Syntax                             153        3100    0.0    0.0     0.0    0.0      1    694400
+       action_12             Syntax                             150        3101    0.0    0.0     0.0    0.0      0         0
+       happyNewToken.cont    Syntax                             128      465486    0.3    0.0     2.5    2.3     22         0
+        action_7             Syntax                             226       12470    0.0    0.0     0.0    0.0      0   1496400
+        action_4             Syntax                             210       58543    0.1    0.1     0.1    0.1      5   7025160
+        happyReduce_5        Syntax                             145           0    0.2    0.4     1.4    1.2     18  18306864
+         action_4            Syntax                             211       58542    0.2    0.2     0.7    0.5     13   7961712
+          action_7           Syntax                             227       12470    0.1    0.0     0.1    0.1      4   1795680
+           happyReduction_2  Syntax                             232       12470    0.0    0.0     0.0    0.0      0    598560
+           action_5          Syntax                             230       12470    0.1    0.0     0.1    0.0      7   1496400
+            action_10        Syntax                             231       12470    0.0    0.0     0.0    0.0      0         0
+           action_15         Syntax                             228       12470    0.0    0.0     0.0    0.0      0         0
+          happyReduction_4   Syntax                             221       58542    0.0    0.0     0.0    0.0      3   2341680
+          action_9           Syntax                             216       16738    0.1    0.0     0.2    0.1      8   2410272
+           happyReduction_3  Syntax                             220       16738    0.0    0.0     0.0    0.0      0    803424
+           action_5          Syntax                             218       16738    0.1    0.0     0.1    0.0      7   2008560
+            action_10        Syntax                             219       16738    0.0    0.0     0.0    0.0      0         0
+           action_13         Syntax                             217       16738    0.0    0.0     0.0    0.0      1         0
+          action_5           Syntax                             214       29334    0.1    0.1     0.1    0.1      7   3520080
+           action_10         Syntax                             215       29334    0.0    0.0     0.0    0.0      1         0
+          action_11          Syntax                             212       58542    0.0    0.0     0.0    0.0      0         0
+         action_5            Syntax                             164       32872    0.1    0.1     0.1    0.1      9   3944640
+          action_10          Syntax                             165       32872    0.0    0.0     0.0    0.0      2         0
+         happyReduction_5    Syntax                             160      127131    0.0    0.0     0.0    0.0      3   2034096
+         action_9            Syntax                             146       35717    0.1    0.1     0.3    0.2      7   5143248
+          happyReduction_3   Syntax                             159       35717    0.0    0.0     0.0    0.0      3   1714416
+          action_5           Syntax                             148       35717    0.1    0.1     0.1    0.1      9   4286040
+           action_10         Syntax                             149       35717    0.0    0.0     0.0    0.0      0         0
+          action_13          Syntax                             147       35717    0.0    0.0     0.0    0.0      1         0
+        action_12            Syntax                             143      127131    0.0    0.0     0.0    0.0      0         0
+        action_9             Syntax                             137       59219    0.1    0.1     0.1    0.1      5   7106280
+        happyReduce_6        Syntax                             133           0    0.1    0.2     0.5    0.5     10   9573120
+         happyReduction_6    Syntax                             162       74790    0.0    0.0     0.0    0.0      3   2393280
+         action_9            Syntax                             138        6764    0.0    0.0     0.1    0.0      3    974016
+          happyReduction_3   Syntax                             161        6764    0.0    0.0     0.0    0.0      1    324672
+          action_5           Syntax                             141        6764    0.0    0.0     0.0    0.0      2    811680
+           action_10         Syntax                             142        6764    0.0    0.0     0.0    0.0      0         0
+          action_13          Syntax                             139        6764    0.0    0.0     0.0    0.0      0         0
+         action_5            Syntax                             135       68026    0.2    0.2     0.2    0.2     15   8163120
+          action_10          Syntax                             136       68026    0.0    0.0     0.0    0.0      0         0
+        action_3             Syntax                             131       74790    0.0    0.0     0.0    0.0      0         0
+        action_5             Syntax                             130      130232    0.2    0.3     0.2    0.3     17  15627840
+        action_0             Syntax                             129        3101    0.0    0.0     0.0    0.0      3    893032
+   verifLoop                 Main                               122        3101    0.0    0.0    49.3   56.3      1         0
+    runVerifier              ProofCheckerLib                    166        3101    1.5    5.5    49.3   56.3    113 269985464
+     runVerifier.n           ProofCheckerLib                    200        3079    0.0    0.0     0.0    0.0      0         0
+     runVerifier.(...)       ProofCheckerLib                    193        3101    0.0    0.0    35.1   37.3      0    272888
+      updContext             ProofCheckerLib                    194        3101    0.1    0.0    35.1   37.3      7     80536
+       getExprMP             ProofCheckerLib                    201     4356085    5.1    7.2    16.3   18.5    381 352335096
+        expr                 ProofCheckerLib                    203     4354789    2.2    0.0     2.2    0.0    167         0
+        ==                   Syntax                             202     8720392    8.1   11.3     8.9   11.3    600 556157488
+         ==                  Syntax                             223      338314    0.0    0.0     0.0    0.0      2         0
+         ==                  Syntax                             204     3711843    0.8    0.0     0.8    0.0     61         0
+       contextMPUpd          ProofCheckerLib                    195     4809651    6.0    6.3    18.7   18.8    448 307699680
+        reason               ProofCheckerLib                    246        1006    0.0    0.0     0.0    0.0      0         0
+        ==                   Syntax                             197     9681092   11.8   12.5    12.7   12.5    880 614789648
+         ==                  Syntax                             225      438947    0.1    0.0     0.1    0.0      6         0
+         ==                  Syntax                             209     4074285    0.8    0.0     0.8    0.0     59         0
+        expr                 ProofCheckerLib                    196     4807556    0.0    0.0     0.0    0.0      0         0
+     runVerifier.c           ProofCheckerLib                    192        3101    0.0    0.0     0.0    0.0      0         0
+     verifier                ProofCheckerLib                    167        3101    0.0    0.0    12.7   13.6      1    111336
+      findMP                 ProofCheckerLib                    190        1513    0.0    0.0    11.6   12.9      0         0
+       findMP'               ProofCheckerLib                    191     2286122    2.5    3.0    11.6   12.9    188 146372328
+        mP                   ProofCheckerLib                    247        1513    0.0    0.0     0.0    0.0      0         0
+        checkMP              ProofCheckerLib                    198     2286122    2.3    3.7     9.1    9.9    174 179829272
+         expr                ProofCheckerLib                    206     1295161    0.2    0.0     0.2    0.0     18         0
+         checkMP'            ProofCheckerLib                    205     1295161    0.5    0.0     5.8    6.2     39         0
+          ==                 Syntax                             207     3935342    4.8    6.2     5.3    6.2    355 306609488
+           ==                Syntax                             224      275309    0.1    0.0     0.1    0.0      6         0
+           ==                Syntax                             208     2006873    0.4    0.0     0.4    0.0     33         0
+         mP                  ProofCheckerLib                    199     2286122    0.7    0.0     0.7    0.0     53         0
+      checkAxioms            ProofCheckerLib                    168        3101    0.0    0.0     1.0    0.7      0         0
+       checkAxioms'          ProofCheckerLib                    169       19211    0.0    0.0     1.0    0.7      2    814368
+        match                ProofCheckerLib                    171       17698    0.0    0.0     1.0    0.7      1   1415840
+         matcher             ProofCheckerLib                    172       67670    0.1    0.1     1.0    0.6      7   3029472
+          load               ProofCheckerLib                    176       23988    0.0    0.0     0.0    0.0      2    767616
+          sAnd               ProofCheckerLib                    175           0    0.4    0.3     0.9    0.6     28  14975208
+           ==                Syntax                             179       65146    0.2    0.1     0.2    0.1     14   4196528
+            ==               Syntax                             222       18296    0.0    0.0     0.0    0.0      0         0
+            ==               Syntax                             180       21011    0.0    0.0     0.0    0.0      0         0
+           store             ProofCheckerLib                    178       11719    0.1    0.1     0.1    0.1     10   3677808
+           load              ProofCheckerLib                    177           0    0.2    0.1     0.2    0.1     14   5279248
+   putOut                    Main                               121        3102    0.5    0.2     1.3    1.8     36   8783224
+    show                     ProofCheckerLib                    240        3101    0.1    0.3     0.8    1.7      6  15417696
+     reason                  ProofCheckerLib                    245        3101    0.0    0.0     0.0    0.0      0         0
+     show                    ProofCheckerLib                    244        3101    0.1    0.1     0.1    0.1      4   5592856
+     expr                    ProofCheckerLib                    242        3101    0.0    0.0     0.0    0.0      0         0
+     show                    Syntax                             241      205022    0.6    1.0     0.7    1.2     44  51265384
+      show                   Syntax                             248       58543    0.0    0.0     0.0    0.0      0         0
+      show                   Syntax                             243       71689    0.1    0.2     0.1    0.2      7   9774320
+ CAF                         Axioms                             115           0    0.0    0.0     0.0    0.0      0      3072
+  ax10                       Axioms                             189           1    0.0    0.0     0.0    0.0      0         0
+  ax9                        Axioms                             188           1    0.0    0.0     0.0    0.0      0         0
+  ax8                        Axioms                             187           1    0.0    0.0     0.0    0.0      0         0
+  ax7                        Axioms                             186           1    0.0    0.0     0.0    0.0      0         0
+  ax6                        Axioms                             185           1    0.0    0.0     0.0    0.0      0         0
+  ax5                        Axioms                             184           1    0.0    0.0     0.0    0.0      0         0
+  ax4                        Axioms                             183           1    0.0    0.0     0.0    0.0      0         0
+  ax3                        Axioms                             182           1    0.0    0.0     0.0    0.0      0         0
+  ax2                        Axioms                             181           1    0.0    0.0     0.0    0.0      0         0
+  ax1                        Axioms                             173           1    0.0    0.0     0.0    0.0      0         0
+  axioms                     Axioms                             170           1    0.0    0.0     0.0    0.0      0         0
+ CAF                         Control.Monad.State.Class          114           0    0.0    0.0     0.0    0.0      0         0
+ CAF                         Control.Monad.Trans.RWS.Lazy       113           0    0.0    0.0     0.0    0.0      0         0
+ CAF                         Control.Monad.Trans.RWS.Strict     112           0    0.0    0.0     0.0    0.0      0         0
+ CAF                         Control.Monad.Trans.State.Lazy     111           0    0.0    0.0     0.0    0.0      0         0
+ CAF                         Control.Monad.Trans.State.Strict   110           0    0.0    0.0     0.0    0.0      0         0
+ CAF                         Data.Functor.Identity              109           0    0.0    0.0     0.0    0.0      0         0
+ CAF                         Control.Monad.IO.Class             108           0    0.0    0.0     0.0    0.0      0         0
+ CAF                         Data.Map.Base                      107           0    0.0    0.0     0.0    0.0      0         0
+ CAF                         GHC.Err                            106           0    0.0    0.0     0.0    0.0      0         0
+ CAF                         GHC.IO.Exception                   105           0    0.0    0.0     0.0    0.0      0         0
+ CAF                         Control.Exception.Base             104           0    0.0    0.0     0.0    0.0      0         0
+ CAF                         GHC.Arr                            103           0    0.0    0.0     0.0    0.0      0         0
+ CAF                         Text.ParserCombinators.ReadP       102           0    0.0    0.0     0.0    0.0      0         0
+ CAF                         Text.Read.Lex                      101           0    0.0    0.0     0.0    0.0      0         0
+ CAF                         GHC.Event.Thread                   100           0    0.0    0.0     0.0    0.0      0         0
+ CAF                         GHC.Conc.Signal                     99           0    0.0    0.0     0.0    0.0      0       672
+ CAF                         GHC.Conc.Sync                       98           0    0.0    0.0     0.0    0.0      0         0
+ CAF                         GHC.Exception                       97           0    0.0    0.0     0.0    0.0      0         0
+ CAF                         GHC.IO.Handle.FD                    96           0    0.0    0.0     0.0    0.0      0     52120
+ CAF                         GHC.Read                            95           0    0.0    0.0     0.0    0.0      0         0
+ CAF                         GHC.TopHandler                      94           0    0.0    0.0     0.0    0.0      0         0
+ CAF                         Data.Maybe                          93           0    0.0    0.0     0.0    0.0      0         0
+ CAF                         GHC.Enum                            92           0    0.0    0.0     0.0    0.0      0         0
+ CAF                         GHC.IO                              91           0    0.0    0.0     0.0    0.0      0         0
+ CAF                         GHC.IO.Encoding                     90           0    0.0    0.0     0.0    0.0      0      3376
+ CAF                         GHC.IO.Handle.Text                  89           0    0.0    0.0     0.0    0.0      0         0
+ CAF                         GHC.Word                            88           0    0.0    0.0     0.0    0.0      0         0
+ CAF                         System.Posix.Internals              87           0    0.0    0.0     0.0    0.0      0         0
+ CAF                         GHC.IO.Encoding.UTF8                86           0    0.0    0.0     0.0    0.0      0         0
+ CAF                         GHC.IO.Handle                       85           0    0.0    0.0     0.0    0.0      0         0
+ CAF                         GHC.IO.Handle.Internals             84           0    0.0    0.0     0.0    0.0      0         0
+ CAF                         GHC.List                            83           0    0.0    0.0     0.0    0.0      0         0
+ CAF                         GHC.Show                            82           0    0.0    0.0     0.0    0.0      0         0
+ CAF                         GHC.Event.EPoll                     81           0    0.0    0.0     0.0    0.0      0         0
+ CAF                         GHC.Event.Internal                  80           0    0.0    0.0     0.0    0.0      0         0
+ CAF                         GHC.ForeignPtr                      79           0    0.0    0.0     0.0    0.0      0         0
+ CAF                         GHC.IO.FD                           78           0    0.0    0.0     0.0    0.0      0        32
+ CAF                         Data.Typeable.Internal              77           0    0.0    0.0     0.0    0.0      0         0
+ CAF                         GHC.Event.Control                   76           0    0.0    0.0     0.0    0.0      0         0
+ CAF                         GHC.Event.Manager                   75           0    0.0    0.0     0.0    0.0      0         0
+ CAF                         GHC.Event.PSQ                       74           0    0.0    0.0     0.0    0.0      0         0
+ CAF                         GHC.IO.Encoding.Iconv               73           0    0.0    0.0     0.0    0.0      0       248
+ CAF                         GHC.IO.Handle.Types                 72           0    0.0    0.0     0.0    0.0      0         0
+ CAF                         Foreign.Marshal.Alloc               71           0    0.0    0.0     0.0    0.0      0         0
+ CAF                         GHC.IO.Encoding.Failure             70           0    0.0    0.0     0.0    0.0      0         0
+ CAF                         GHC.IO.Encoding.UTF16               69           0    0.0    0.0     0.0    0.0      0         0
+ CAF                         GHC.IO.Encoding.UTF32               68           0    0.0    0.0     0.0    0.0      0         0
+ CAF                         GHC.Integer.Type                    67           0    0.0    0.0     0.0    0.0      0         0
+ SYSTEM                      SYSTEM                              66           0    0.3    4.5     0.3    4.5     21 221864056
+  main                       Main                               249           0    0.0    0.0     0.0    0.0      0        24
+ GC                          GC                                  65           0   17.8    0.0    17.8    0.0   1325      2224
+ OVERHEAD_of                 PROFILING                           64           0    0.3    0.0     0.3    0.0     19         0
+ DONT_CARE                   MAIN                                63           0    0.0    0.0     0.0    0.0      0         0
+ PINNED                      SYSTEM                              62           0    0.0    0.0     0.0    0.0      0         0
+ IDLE                        IDLE                                61           0    0.0    0.0     0.0    0.0      0         0

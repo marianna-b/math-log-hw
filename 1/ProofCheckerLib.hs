@@ -1,5 +1,4 @@
-module Prover where
-
+module ProofCheckerLib where
 
 import Axioms
 import Control.Monad.State
@@ -9,11 +8,13 @@ import Syntax
 
 data Reason = ModusPonens Int Int
               | Axiom Int
+              | NoProof
 
 instance Show Reason where
   show a = case a of
-    ModusPonens x y -> "M.P. " ++ (show x) ++ ", " ++ (show y)
-    Axiom ax  -> "Сх. акс. " ++ (show ax)
+    ModusPonens x y -> "(M.P. " ++ (show x) ++ ", " ++ (show y) ++ ")"
+    Axiom ax  -> "(Сх. акс. " ++ (show ax) ++ ")"
+    NoProof -> "(Не доказано)"
 
 type Result = Either String Reason
 
@@ -22,8 +23,11 @@ type StmtMap = M.Map String Expr
 
 data Rule = Rule { expr :: Expr,
                    mP :: Int,
-                   current :: String }
-
+                   reason :: Reason }
+          
+instance Show Rule where
+    show x = (show  (expr x)) ++ " " ++ (show (reason x))
+      
 -------------------------------------------------------------------
 
 -- Function return an expression stored by a name
@@ -89,6 +93,7 @@ checkAxioms' [] _ _ = Nothing
 -------------------------------------------------------------------
 
 
+
 -- Finds if there is an expression
 -- given expression may be deduced from by MP
 findMP :: Context -> Expr -> Maybe (Int, Int)
@@ -124,7 +129,7 @@ updContext c e = (contextMPUpd c e (length c), getExprMP c e 0)
 contextMPUpd :: Context -> Expr -> Int -> Context
 contextMPUpd (c:cx) e n = case expr c of
   BinOp Impl a b -> if (a == e)
-                    then (Rule (expr c) n (current c)):(contextMPUpd cx e n)
+                    then (Rule (expr c) n (reason c)):(contextMPUpd cx e n)
                     else c:(contextMPUpd cx e n)
   _              -> c:(contextMPUpd cx e n)
 contextMPUpd [] _ _ = []
@@ -146,14 +151,8 @@ runVerifier :: Context -> Expr -> Either String Context
 runVerifier ctx e = case verifier ctx e of
   Left str -> Left str
   Right a -> let (c, n) = updContext ctx e in
-    Right $ c ++ [(Rule e n (mesg a))]
+    Right $ c ++ [(Rule e n a)]
 
-
--- Function generates message for a proof
-mesg :: Reason -> String
-mesg a = case a of
-  Axiom n -> "Сх. акс. " ++ show n
-  ModusPonens n1 n2 -> "M.P. " ++ show n1 ++ ", " ++ show n2
 
 -- Function gets context and expression
 -- Checks if it is deduced from axioms or from MP
@@ -164,4 +163,4 @@ verifier c e = case checkAxioms e of
   Just idx -> Right $ Axiom idx
   Nothing -> case findMP c e of
     Just (a, b) -> Right $ ModusPonens a b
-    Nothing -> Left "Не доказано"
+    Nothing -> Right NoProof

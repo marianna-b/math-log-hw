@@ -36,13 +36,29 @@ Expr '&' Expr { BinOp And $1 $3 }
 happyError _ = Left "syntax error"
 
 data BinOpType = Or | And | Impl
-               deriving (Show, Eq)
+               deriving Eq
+
+instance Show BinOpType where
+  show x = case x of
+    Or -> "|"
+    And -> "&"
+    Impl -> "->"
 
 data UnOpType = LNot
-              deriving (Show, Eq)
+              deriving Eq
+
+instance Show UnOpType where
+  show x = "!"
 
 data Expr = Statement String
           | BinOp BinOpType Expr Expr
           | UnOp UnOpType Expr
-  deriving (Show, Eq)
+  deriving Eq
+
+instance Show Expr where
+  show x = case x of
+    Statement s -> s
+    BinOp t a b -> "(" ++ (show a) ++ (show t) ++ (show b) ++ ")"
+    UnOp t a -> "("++(show a) ++ (show t) ++ ")"
+
 }
