@@ -10,21 +10,26 @@ $alpha = [A-Z]
 $digit = [0-9]
 
 tokens :-
-  $white+				;
+  " "				;
+  [\t]				;
+  [\r]				;
   [$alpha] [$alpha $digit]* { \(p,_,_,s) len -> return $ Stmt $ take len s }
+  "," { \(p,_,_,s) len -> return $ Comma}
+  [\n] { \(p,_,_,s) len -> return $ EOLN}
+  "|-" { \(p,_,_,s) len -> return $ Turnstile}
   "|" { \(p,_,_,s) len -> return $ BinOr}
   "&" { \(p,_,_,s) len -> return $ BinAnd }
-  "!"{ \(p,_,_,s) len -> return $ Not}
-  "->"{ \(p,_,_,s) len -> return $ Implic}
-  "("{ \(p,_,_,s) len -> return $ LeftParen }
-  ")"{ \(p,_,_,s) len -> return $ RightParen }
+  "!" { \(p,_,_,s) len -> return $ Not}
+  "->" { \(p,_,_,s) len -> return $ Implic}
+  "(" { \(p,_,_,s) len -> return $ LeftParen }
+  ")" { \(p,_,_,s) len -> return $ RightParen }
 {
 
-alexEOF = return TEOF
-
-alexScanTokens str = runAlex str $ do
+alexEOF = return EOF
+          
+tok str = runAlex str $ do
   let loop = do tok <- alexMonadScan
-                if tok == TEOF
+                if tok == EOF
                         then return []
                         else do toks <- loop
                                 return (tok:toks)
@@ -37,7 +42,10 @@ data Token = Stmt String
            | Implic
            | LeftParen
            | RightParen
-           | TEOF
+           | Comma
+           | Turnstile
+           | EOLN
+           | EOF
            deriving (Eq)
 
 instance Show Token where
@@ -49,5 +57,8 @@ instance Show Token where
     Implic -> "->"
     LeftParen -> "("
     RightParen -> ")"
-    TEOF -> "(EOF)"
+    Comma -> ","
+    Turnstile -> "|-"
+    EOLN -> "(EOLN)\n"
+    EOF -> "(EOF)"
 }

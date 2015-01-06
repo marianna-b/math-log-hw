@@ -4,7 +4,8 @@ module Syntax where
 import Lexer
 }
 
-%name synt
+%name syntDeduct DeductionProof
+%name syntExpr Expr
 %tokentype { Token }
 %monad { Either String } { (>>=) } { return }
 
@@ -16,13 +17,34 @@ stmt { Stmt $$ }
 '->' { Implic }
 '(' { LeftParen }
 ')' { RightParen }
+'\n' { EOLN }
+',' { Comma }
+'|-' { Turnstile }
 
-
+%left '|-'
+%left ','
 %right '->'
 %left '|'
 %left '&'
 %right '!'
 %%
+
+DeductionProof:
+AssumptionList '|-' Expr '\n' ProofList { DeductionProof $3 $1 $5 }
+
+AssumptionList:
+AssumptionListRev { reverse $1 }
+
+AssumptionListRev:
+Expr { [$1] }
+| AssumptionListRev ',' Expr { $3 : $1 }
+
+ProofList:
+ProofListRev{ reverse $1 }
+
+ProofListRev:
+Expr '\n' { [$1] }
+| ProofListRev Expr '\n' { $2 : $1 }
 
 Expr:
 Expr '&' Expr { BinOp And $1 $3 }
@@ -33,16 +55,48 @@ Expr '&' Expr { BinOp And $1 $3 }
 | stmt { Statement $1 }
 {
 
-happyError _ = Left "syntax error"
+happyError rest = Left $ "syntax error" ++ show rest
+
+data DeductionProof =
+    DeductionProof{
+      statement :: Expr,
+      assumption :: [Expr],
+      proof :: [Expr]
+    }
+    deriving Eq
+
+showExprList :: String -> [Expr] -> String
+showExprList _ [] = ""
+showExprList _ (x:[]) = show x
+showExprList c (x:xs) = (show x) ++ c ++ showExprList c xs
+
+             
+instance Show DeductionProof where
+    show x = (showExprList "," (assumption x)) ++ "|-" ++ (show (statement x)) ++ "\n" ++ (showExprList "\n" (proof x)) ++ "\n"
 
 data BinOpType = Or | And | Impl
-               deriving (Show, Eq)
+               deriving Eq
+
+instance Show BinOpType where
+  show x = case x of
+    Or -> "|"
+    And -> "&"
+    Impl -> "->"
 
 data UnOpType = LNot
-              deriving (Show, Eq)
+              deriving Eq
+
+instance Show UnOpType where
+  show x = "!"
 
 data Expr = Statement String
           | BinOp BinOpType Expr Expr
           | UnOp UnOpType Expr
-  deriving (Show, Eq)
+  deriving Eq
+
+instance Show Expr where
+  show x = case x of
+    Statement s -> s
+    BinOp t a b -> "(" ++ (show a) ++ (show t) ++ (show b) ++ ")"
+    UnOp t a -> "("++(show t) ++ (show a) ++ ")"
 }

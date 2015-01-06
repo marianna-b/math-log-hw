@@ -21,7 +21,12 @@ import Char (ord)
 {-# LINE 1 "templates/wrappers.hs" #-}
 {-# LINE 1 "<built-in>" #-}
 {-# LINE 1 "<command-line>" #-}
-{-# LINE 8 "<command-line>" #-}
+
+
+
+
+
+
 # 1 "/usr/include/stdc-predef.h" 1 3 4
 
 # 17 "/usr/include/stdc-predef.h" 3 4
@@ -67,7 +72,7 @@ import Char (ord)
 
 
 
-{-# LINE 8 "<command-line>" #-}
+{-# LINE 6 "<command-line>" #-}
 {-# LINE 1 "templates/wrappers.hs" #-}
 -- -----------------------------------------------------------------------------
 -- Alex wrapper code.
@@ -296,26 +301,26 @@ token t input len = return (t input len)
 -- For compatibility with previous versions of Alex, and because we can.
 
 alex_base :: Array Int Int
-alex_base = listArray (0,9) [-8,-56,-1,52,0,0,0,0,0,0]
+alex_base = listArray (0,14) [-8,-59,0,0,0,52,0,0,0,-41,0,0,0,0,0]
 
 alex_table :: Array Int Int
-alex_table = listArray (0,307) [0,2,2,2,2,2,7,0,2,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,2,6,0,0,0,0,5,2,8,9,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3,3,3,3,3,3,3,3,0,0,0,0,0,0,4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+alex_table = listArray (0,307) [0,3,7,12,8,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,11,0,0,0,0,10,0,13,14,0,0,6,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,5,5,5,5,5,5,5,5,0,0,0,0,0,0,9,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
 alex_check :: Array Int Int
-alex_check = listArray (0,307) [-1,9,10,11,12,13,62,-1,9,10,11,12,13,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,32,33,-1,-1,-1,-1,38,32,40,41,-1,-1,-1,45,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,48,49,50,51,52,53,54,55,56,57,-1,-1,-1,-1,-1,-1,124,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]
+alex_check = listArray (0,307) [-1,9,10,62,45,13,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,32,33,-1,-1,-1,-1,38,-1,40,41,-1,-1,44,45,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,48,49,50,51,52,53,54,55,56,57,-1,-1,-1,-1,-1,-1,124,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]
 
 alex_deflt :: Array Int Int
-alex_deflt = listArray (0,9) [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]
+alex_deflt = listArray (0,14) [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]
 
-alex_accept = listArray (0::Int,9) [AlexAccNone,AlexAccNone,AlexAccSkip,AlexAcc (alex_action_1),AlexAcc (alex_action_2),AlexAcc (alex_action_3),AlexAcc (alex_action_4),AlexAcc (alex_action_5),AlexAcc (alex_action_6),AlexAcc (alex_action_7)]
-{-# LINE 21 "Lexer.x" #-}
+alex_accept = listArray (0::Int,14) [AlexAccNone,AlexAccNone,AlexAccSkip,AlexAccSkip,AlexAccSkip,AlexAcc (alex_action_3),AlexAcc (alex_action_4),AlexAcc (alex_action_5),AlexAcc (alex_action_6),AlexAcc (alex_action_7),AlexAcc (alex_action_8),AlexAcc (alex_action_9),AlexAcc (alex_action_10),AlexAcc (alex_action_11),AlexAcc (alex_action_12)]
+{-# LINE 26 "Lexer.x" #-}
 
 
-alexEOF = return TEOF
-
-alexScanTokens str = runAlex str $ do
+alexEOF = return EOF
+          
+tok str = runAlex str $ do
   let loop = do tok <- alexMonadScan
-                if tok == TEOF
+                if tok == EOF
                         then return []
                         else do toks <- loop
                                 return (tok:toks)
@@ -328,7 +333,10 @@ data Token = Stmt String
            | Implic
            | LeftParen
            | RightParen
-           | TEOF
+           | Comma
+           | Turnstile
+           | EOLN
+           | EOF
            deriving (Eq)
 
 instance Show Token where
@@ -340,21 +348,25 @@ instance Show Token where
     Implic -> "->"
     LeftParen -> "("
     RightParen -> ")"
-    TEOF -> "(EOF)"
+    Comma -> ","
+    Turnstile -> "|-"
+    EOLN -> "(EOLN)\n"
+    EOF -> "(EOF)"
 
-alex_action_1 =  \(p,_,_,s) len -> return $ Stmt $ take len s 
-alex_action_2 =  \(p,_,_,s) len -> return $ BinOr
-alex_action_3 =  \(p,_,_,s) len -> return $ BinAnd 
-alex_action_4 =  \(p,_,_,s) len -> return $ Not
-alex_action_5 =  \(p,_,_,s) len -> return $ Implic
-alex_action_6 =  \(p,_,_,s) len -> return $ LeftParen 
-alex_action_7 =  \(p,_,_,s) len -> return $ RightParen 
+alex_action_3 =  \(p,_,_,s) len -> return $ Stmt $ take len s 
+alex_action_4 =  \(p,_,_,s) len -> return $ Comma
+alex_action_5 =  \(p,_,_,s) len -> return $ EOLN
+alex_action_6 =  \(p,_,_,s) len -> return $ Turnstile
+alex_action_7 =  \(p,_,_,s) len -> return $ BinOr
+alex_action_8 =  \(p,_,_,s) len -> return $ BinAnd 
+alex_action_9 =  \(p,_,_,s) len -> return $ Not
+alex_action_10 =  \(p,_,_,s) len -> return $ Implic
+alex_action_11 =  \(p,_,_,s) len -> return $ LeftParen 
+alex_action_12 =  \(p,_,_,s) len -> return $ RightParen 
 {-# LINE 1 "templates/GenericTemplate.hs" #-}
 {-# LINE 1 "templates/GenericTemplate.hs" #-}
 {-# LINE 1 "<built-in>" #-}
 {-# LINE 1 "<command-line>" #-}
-
-
 
 
 
@@ -405,7 +417,7 @@ alex_action_7 =  \(p,_,_,s) len -> return $ RightParen
 
 
 
-{-# LINE 7 "<command-line>" #-}
+{-# LINE 5 "<command-line>" #-}
 {-# LINE 1 "templates/GenericTemplate.hs" #-}
 -- -----------------------------------------------------------------------------
 -- ALEX TEMPLATE
