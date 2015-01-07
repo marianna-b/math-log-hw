@@ -6,6 +6,7 @@ import Lexer
 
 %name syntDeduct DeductionProof
 %name syntExpr Expr
+%name syntProof ProofList
 %tokentype { Token }
 %monad { Either String } { (>>=) } { return }
 

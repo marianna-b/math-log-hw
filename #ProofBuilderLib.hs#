@@ -28,7 +28,7 @@ getEstimListProof e var i end = case getProofForEstim e var i of
                   fmap (prf :) $ getEstimListProof e var (i + 1) end
 
 getProofForEstim :: Expr -> [String] -> Int -> (Bool, Proof)
-getProofForEstim (Statement s) var mask = 
+getProofForEstim (Statement s) var mask = if getVarVal var mask s == 0 then UnOp Not
 getProofForEstim (BinOp t a b) var mask = undefined
 getProofForEstim (UnOp t a) var mask = undefined
 ------------------------------------------------------------------------------
