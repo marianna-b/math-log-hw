@@ -1,12 +1,13 @@
 import Syntax
 import Lexer
-import ProofCheckerLib
-
+import ProofCheckerLib2
+import qualified Data.Map.Strict as M
 
 parseProof :: [String] -> [Expr]
 parseProof [] = []
-parseProof (x:xs) = case tok x >>= syntExpr of
-  Right e -> [e] ++ parseProof xs
+parseProof (x:xs) = case tok x >>= syntExprNoEoln of
+  Right e -> e:(parseProof xs)
+  Left err -> error err
 
 putOut :: Int -> Context -> IO ()
 putOut _ [] = return ()
@@ -17,4 +18,5 @@ putOut n (x:xs) = do
 main :: IO ()
 main = do
   input <- getContents
-  putOut 1 $ verifLoop [] $ parseProof (lines input)
+  let mps = MPsMap M.empty M.empty M.empty
+  putOut 1 $ verifLoop mps [] $ parseProof $ lines input

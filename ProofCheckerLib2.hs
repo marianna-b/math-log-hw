@@ -1,9 +1,10 @@
-module ProofCheckerLib where
+module ProofCheckerLib2 where
 
 import Lexer
 import Syntax
 import Control.Monad.State
 import Data.Functor
+import Debug.Trace
 import qualified Data.Map.Strict as M
 
 data Reason = ModusPonens Int Int
@@ -12,6 +13,11 @@ data Reason = ModusPonens Int Int
               | Assumption
               | Alpha
             deriving Eq
+
+data MPsMap = MPsMap { found :: M.Map Expr (Int, Int),
+                       rParts :: M.Map Expr [Int],
+                       proved :: M.Map Expr Int
+                     }
 
 instance Show Reason where
   show a = case a of
@@ -27,14 +33,11 @@ type Context = [Rule]
 type StmtMap = M.Map String Expr
 
 data Rule = Rule { expr :: Expr,
-                   mP :: Int,
                    reason :: Reason }
           
 instance Show Rule where
     show x = (show  (expr x)) ++ " " ++ (show (reason x))
-      
 -------------------------------------------------------------------
-
 --AXIOMS
 
 axioms :: [Expr]
@@ -56,7 +59,6 @@ axiomsStr = ["A->B->A",
              "(A->Q)->(B->Q)->(A|B->Q)",
              "(A->B)->(A->!B)->!A",
              "!!A->A"]
-
 -------------------------------------------------------------------
 -- Function return an expression stored by a name
 -- if it exists in a map
@@ -103,10 +105,8 @@ matcher (Statement a) b = do
               else return False
 
 matcher _ _ = return False
-
 -------------------------------------------------------------------
-
--- Function checks if an expression may be deduced from axioms
+-- Function check s if an expression may be deduced from axioms
 -- using substitution
 checkAxioms :: Expr -> Maybe Int
 checkAxioms e = checkAxioms' axioms e 1
@@ -117,89 +117,86 @@ checkAxioms' (x:xs) e n = if (match x e)
                          then Just n
                          else checkAxioms' xs e $ n + 1
 checkAxioms' [] _ _ = Nothing
-
 -------------------------------------------------------------------
-
-
-
 -- Finds if there is an expression
 -- given expression may be deduced from by MP
-findMP :: Context -> Expr -> Maybe (Int, Int)
-findMP c e = findMP' c e 1
-
--- The same as previous but with a number
-findMP' :: Context -> Expr -> Int -> Maybe (Int, Int)
-findMP' (r:xs) e n = if checkMP e r
-                     then Just ((mP r) + 1, n)
-                     else findMP' xs e $ n + 1
-findMP' [] _ _ = Nothing
-
--- Checks if there is A for (A -> B), if B must be proved
-checkMP:: Expr -> Rule -> Bool
-checkMP e r = if (mP r) == -1
-              then False
-              else checkMP' e $ expr r
-
--- Checks if first expression can be deduced from second
-checkMP' :: Expr -> Expr -> Bool
-checkMP' e (BinOp Impl a b) = e == b
-checkMP' _ _ = False
-
+findMP :: MPsMap -> Expr -> Maybe (Int, Int)
+findMP mps e = M.lookup e (found mps)
 -------------------------------------------------------------------
+updBy :: MPsMap -> Context -> [Int] -> Int -> MPsMap
+updBy mps _ [] _ = mps
+updBy mps ctx (x:xs) pos =
+    let item = expr $ ctx !! (x - 1) in
+    let f = found mps in
+    let r = rParts mps in
+    let p = proved mps in
+    let newMPs =
+            case item of
+              BinOp Impl _ b -> MPsMap (M.insert b (pos, x) f) r p
+              _ -> error "Не импликация"
+    in
+    updBy newMPs ctx xs pos
 
--- Updates context with proved expression
--- add expr to Context &
--- check if expr may be used for MP
-updContext :: Context -> Expr -> (Context, Int)
-updContext c e = (contextMPUpd c e (length c), getExprMP c e 0)
+updList :: MPsMap -> Context -> Expr -> Int -> MPsMap
+updList mps ctx e pos =
+    let r = (rParts mps) in
+    case M.lookup e r of
+      Nothing -> mps
+      Just list ->
+          let newMPs = updBy mps ctx list pos in
+          let newR = M.delete e (rParts newMPs) in
+          let newF = found newMPs in
+          let newP = proved newMPs in
+          MPsMap newF newR newP
 
+updImpl :: MPsMap -> Expr -> Expr -> Int -> MPsMap
+updImpl mps eL eR pos =
+    let p = proved mps in
+    let f = found mps in
+    let r = rParts mps in
+    case M.lookup eL p of
+      Just i ->
+          let nF = M.insert eR (i, pos) f in
+          MPsMap nF r p
+      Nothing ->
+        case M.lookup eL r of
+          Nothing ->
+              let nR = M.insert eL [pos] r in
+              MPsMap f nR p
+          Just list ->
+              let nR = M.insert eL (pos:list) r in
+              MPsMap f nR p
 
-contextMPUpd :: Context -> Expr -> Int -> Context
-contextMPUpd (c:cx) e n = case expr c of
-  BinOp Impl a b -> if (a == e)
-                    then (Rule (expr c) n (reason c)):(contextMPUpd cx e n)
-                    else c:(contextMPUpd cx e n)
-  _              -> c:(contextMPUpd cx e n)
-contextMPUpd [] _ _ = []
-
-getExprMP :: Context -> Expr -> Int -> Int
-getExprMP (c:cx) e n  = case e of
-  BinOp Impl a _ -> if (a == expr c)
-                      then n
-                      else getExprMP cx e $ n + 1
-  _                -> -1
-getExprMP [] _ _ = -1
-
+updContext :: MPsMap -> Context -> Expr -> Int -> MPsMap
+updContext mps ctx e pos =
+    let newMPs' = updList mps ctx e pos in
+    let p = proved newMPs' in
+    let f = found newMPs' in
+    let r = rParts newMPs' in
+    let nP = M.insert e pos p in
+    let newMPs =  MPsMap f r nP in
+    case e of
+      BinOp Impl a b -> updImpl newMPs a b pos
+      _              -> newMPs
 -------------------------------------------------------------------
-
--- Function gets context and expression
--- Runs verifier and updates context
--- Returns new context
-runVerifier :: Context -> Expr -> Either String Context
-runVerifier ctx e = case verifier ctx e of
+runVerifier :: MPsMap -> Context -> Expr -> Either String (MPsMap, Context) 
+runVerifier mps ctx e = case verifier mps e of
   Left str -> Left str
-  Right a -> let (c, n) = updContext ctx e in --------------------------------------------------
-             if a == NoProof then
-                Right $ ctx ++ [(Rule e (-1) a)]
-             else
-                 Right $ c ++ [(Rule e n a)]
+  Right a ->
+    let pos = (length ctx) + 1 in
+    let newMPs = updContext mps ctx e pos in
+        Right $ (newMPs, ctx ++ [(Rule e a)])
 
--- Function gets context and expression
--- Checks if it is deduced from axioms or from MP
--- Returns number of axiom, numbers of expression for MP
--- or an error string
-verifier :: Context -> Expr -> Result
-verifier c e = case checkAxioms e of
+verifier :: MPsMap -> Expr -> Result
+verifier mps e = case checkAxioms e of
   Just idx -> Right $ Axiom idx
-  Nothing -> case findMP c e of ----------------------------------------------------------------
+  Nothing -> case findMP mps e of
     Just (a, b) -> Right $ ModusPonens a b
     Nothing -> Right NoProof
 
--- Functions gets context(m.b. empty) and list of expressions
--- Iterates through list and return new context
-verifLoop :: Context -> [Expr] -> Context
-verifLoop ctx (x:[])  = case runVerifier ctx x of
-  Right newCtx -> newCtx
-verifLoop ctx (x:xs) = case runVerifier ctx x of
-  Right newCtx -> verifLoop newCtx xs
-  Left _ -> verifLoop ctx xs
+verifLoop :: MPsMap -> Context -> [Expr] -> Context
+verifLoop mps ctx (x:[]) = case runVerifier mps ctx x of
+  Right (_, newCtx) -> newCtx
+verifLoop mps ctx (x:xs) = case runVerifier mps ctx x of
+  Right (newMPs, newCtx) -> verifLoop newMPs newCtx xs
+  Left _ -> verifLoop mps ctx xs

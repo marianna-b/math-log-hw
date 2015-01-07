@@ -1,8 +1,9 @@
 module ApplyDeductionLib where
 
 import Syntax
-import ProofCheckerLib
+import ProofCheckerLib2
 import Debug.Trace
+import qualified Data.Map.Strict as M
 
 checkDeductProof :: Context -> Bool
 checkDeductProof [] = True
@@ -14,7 +15,8 @@ checkDeductProof (x:xs) =
 
 getNewProof:: Expr -> [Expr] -> [Expr] -> Either String [Expr]
 getNewProof a assump prf =
-  let ctx = (getDeductCtx [] prf a assump) in
+  let mps = MPsMap M.empty M.empty M.empty in
+  let ctx = (getDeductCtx mps [] prf a assump) in
   --if trace (show ctx) $ checkDeductProof ctx then
   if checkDeductProof ctx then
     Right $ reProofDeduct ctx a ctx
@@ -74,15 +76,13 @@ lookUpSub _ [] = Nothing
 lookUpSub s ((a, b):xs) = if (a == s) then Just b
                           else lookUpSub s xs
 --------------------------------------------------------------------
-getDeductCtx :: Context -> [Expr] -> Expr -> [Expr] -> Context
-getDeductCtx ctx [] _ _ = ctx
-getDeductCtx ctx (x:xs) a assump =
-    let result = checkAssump x a assump (verifier ctx x) in
-      let (c, n) = updContext ctx x in
-      --case trace ("-----------" ++ (show result) ++ "\n") result of
-      case result of
-        NoProof -> getDeductCtx (ctx ++ [(Rule x (-1) NoProof)]) xs a assump
-        r -> getDeductCtx (c ++ [(Rule x n r)]) xs a assump
+getDeductCtx :: MPsMap -> Context -> [Expr] -> Expr -> [Expr] -> Context
+getDeductCtx _ ctx [] _ _ = ctx
+getDeductCtx mps ctx (x:xs) a assump =
+    let pos = (length ctx) + 1 in
+    let r = checkAssump x a assump (verifier mps x) in
+    let newMPs = updContext mps ctx x pos in
+    getDeductCtx newMPs (ctx ++ [(Rule x r)]) xs a assump
 --------------------------------------------------------------------
 checkAssump :: Expr -> Expr -> [Expr] -> Result -> Reason
 checkAssump x a assump (Right res)

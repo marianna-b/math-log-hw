@@ -5,7 +5,8 @@ import Lexer
 }
 
 %name syntDeduct DeductionProof
-%name syntExpr Expr
+%name syntExpr SingleExpr
+%name syntExprNoEoln Expr
 %name syntProof ProofList
 %tokentype { Token }
 %monad { Either String } { (>>=) } { return }
@@ -29,6 +30,9 @@ stmt { Stmt $$ }
 %left '&'
 %right '!'
 %%
+
+SingleExpr:
+Expr '\n' { $1 }
 
 DeductionProof:
 AssumptionList '|-' Expr '\n' ProofList { DeductionProof $3 $1 $5 }
@@ -64,7 +68,7 @@ data DeductionProof =
       assumption :: [Expr],
       proof :: [Expr]
     }
-    deriving Eq
+    deriving (Ord, Eq)
 
 showExprList :: String -> [Expr] -> String
 showExprList _ [] = ""
@@ -76,7 +80,7 @@ instance Show DeductionProof where
     show x = (showExprList "," (assumption x)) ++ "|-" ++ (show (statement x)) ++ "\n" ++ (showExprList "\n" (proof x)) ++ "\n"
 
 data BinOpType = Or | And | Impl
-               deriving Eq
+               deriving (Ord, Eq)
 
 instance Show BinOpType where
   show x = case x of
@@ -85,7 +89,7 @@ instance Show BinOpType where
     Impl -> "->"
 
 data UnOpType = LNot
-              deriving Eq
+              deriving (Ord, Eq)
 
 instance Show UnOpType where
   show x = "!"
@@ -93,7 +97,7 @@ instance Show UnOpType where
 data Expr = Statement String
           | BinOp BinOpType Expr Expr
           | UnOp UnOpType Expr
-  deriving Eq
+  deriving (Eq, Ord)
 
 instance Show Expr where
   show x = case x of
