@@ -301,19 +301,19 @@ token t input len = return (t input len)
 -- For compatibility with previous versions of Alex, and because we can.
 
 alex_base :: Array Int Int
-alex_base = listArray (0,14) [-8,-59,0,0,0,52,0,0,0,-41,0,0,0,0,0]
+alex_base = listArray (0,22) [-8,-59,0,0,0,-42,-7,0,0,0,-41,0,0,0,0,0,0,0,0,0,0,0,0]
 
 alex_table :: Array Int Int
-alex_table = listArray (0,307) [0,3,7,12,8,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,11,0,0,0,0,10,0,13,14,0,0,6,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,5,5,5,5,5,5,5,5,0,0,0,0,0,0,9,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+alex_table = listArray (0,248) [0,3,8,13,9,4,5,5,5,5,5,5,5,5,5,5,0,0,0,0,0,0,0,0,2,12,0,0,0,0,11,22,14,15,20,19,7,1,0,0,21,6,6,6,6,6,6,6,6,6,6,0,0,18,0,17,16,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,0,0,0,0,0,0,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,0,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
 alex_check :: Array Int Int
-alex_check = listArray (0,307) [-1,9,10,62,45,13,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,32,33,-1,-1,-1,-1,38,-1,40,41,-1,-1,44,45,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,48,49,50,51,52,53,54,55,56,57,-1,-1,-1,-1,-1,-1,124,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]
+alex_check = listArray (0,248) [-1,9,10,62,45,13,48,49,50,51,52,53,54,55,56,57,-1,-1,-1,-1,-1,-1,-1,-1,32,33,-1,-1,-1,-1,38,39,40,41,42,43,44,45,-1,-1,48,48,49,50,51,52,53,54,55,56,57,-1,-1,61,-1,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,-1,-1,-1,-1,-1,-1,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,-1,124,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]
 
 alex_deflt :: Array Int Int
-alex_deflt = listArray (0,14) [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]
+alex_deflt = listArray (0,22) [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]
 
-alex_accept = listArray (0::Int,14) [AlexAccNone,AlexAccNone,AlexAccSkip,AlexAccSkip,AlexAccSkip,AlexAcc (alex_action_3),AlexAcc (alex_action_4),AlexAcc (alex_action_5),AlexAcc (alex_action_6),AlexAcc (alex_action_7),AlexAcc (alex_action_8),AlexAcc (alex_action_9),AlexAcc (alex_action_10),AlexAcc (alex_action_11),AlexAcc (alex_action_12)]
-{-# LINE 26 "Lexer.x" #-}
+alex_accept = listArray (0::Int,22) [AlexAccNone,AlexAccNone,AlexAccSkip,AlexAccSkip,AlexAccSkip,AlexAcc (alex_action_3),AlexAcc (alex_action_4),AlexAcc (alex_action_5),AlexAcc (alex_action_6),AlexAcc (alex_action_7),AlexAcc (alex_action_8),AlexAcc (alex_action_9),AlexAcc (alex_action_10),AlexAcc (alex_action_11),AlexAcc (alex_action_12),AlexAcc (alex_action_13),AlexAcc (alex_action_14),AlexAcc (alex_action_15),AlexAcc (alex_action_16),AlexAcc (alex_action_17),AlexAcc (alex_action_18),AlexAcc (alex_action_19),AlexAcc (alex_action_20)]
+{-# LINE 34 "Lexer.x" #-}
 
 
 alexEOF = return EOF
@@ -326,7 +326,8 @@ tok str = runAlex str $ do
                                 return (tok:toks)
   loop
 
-data Token = Stmt String
+data Token = Variable String
+           | PredicatSymb String
            | BinOr
            | BinAnd
            | Not
@@ -337,11 +338,19 @@ data Token = Stmt String
            | Turnstile
            | EOLN
            | EOF
+           | Apostrophe
+           | Zero
+           | Multiply
+           | Plus
+           | Equality
+           | QuantifierAll
+           | QuantifierExists
            deriving (Eq)
 
 instance Show Token where
   show x = case x of
-    Stmt s -> s
+    Variable s -> "Var " ++ s
+    PredicatSymb s -> "Predicatsymb " ++ s
     BinOr -> "|"
     BinAnd -> "&"
     Not -> "!"
@@ -352,17 +361,33 @@ instance Show Token where
     Turnstile -> "|-"
     EOLN -> "(EOLN)\n"
     EOF -> "(EOF)"
+    Apostrophe -> "'"
+    Zero -> "0"
+    Multiply -> "*"
+    Plus -> "+"
+    Equality -> "="
+    QuantifierAll -> "@"
+    QuantifierExists -> "?"
+           
 
-alex_action_3 =  \(p,_,_,s) len -> return $ Stmt $ take len s 
-alex_action_4 =  \(p,_,_,s) len -> return $ Comma
-alex_action_5 =  \(p,_,_,s) len -> return $ EOLN
-alex_action_6 =  \(p,_,_,s) len -> return $ Turnstile
-alex_action_7 =  \(p,_,_,s) len -> return $ BinOr
-alex_action_8 =  \(p,_,_,s) len -> return $ BinAnd 
-alex_action_9 =  \(p,_,_,s) len -> return $ Not
-alex_action_10 =  \(p,_,_,s) len -> return $ Implic
-alex_action_11 =  \(p,_,_,s) len -> return $ LeftParen 
-alex_action_12 =  \(p,_,_,s) len -> return $ RightParen 
+alex_action_3 =  \(p,_,_,s) len -> return $ PredicatSymb $ take len s 
+alex_action_4 =  \(p,_,_,s) len -> return $ Variable $ take len s 
+alex_action_5 =  \(p,_,_,s) len -> return $ Comma 
+alex_action_6 =  \(p,_,_,s) len -> return $ EOLN 
+alex_action_7 =  \(p,_,_,s) len -> return $ Turnstile 
+alex_action_8 =  \(p,_,_,s) len -> return $ BinOr 
+alex_action_9 =  \(p,_,_,s) len -> return $ BinAnd 
+alex_action_10 =  \(p,_,_,s) len -> return $ Not 
+alex_action_11 =  \(p,_,_,s) len -> return $ Implic 
+alex_action_12 =  \(p,_,_,s) len -> return $ LeftParen 
+alex_action_13 =  \(p,_,_,s) len -> return $ RightParen 
+alex_action_14 =  \(p,_,_,s) len -> return $ QuantifierAll 
+alex_action_15 =  \(p,_,_,s) len -> return $ QuantifierExists 
+alex_action_16 =  \(p,_,_,s) len -> return $ Equality 
+alex_action_17 =  \(p,_,_,s) len -> return $ Plus 
+alex_action_18 =  \(p,_,_,s) len -> return $ Multiply 
+alex_action_19 =  \(p,_,_,s) len -> return $ Zero 
+alex_action_20 =  \(p,_,_,s) len -> return $ Apostrophe 
 {-# LINE 1 "templates/GenericTemplate.hs" #-}
 {-# LINE 1 "templates/GenericTemplate.hs" #-}
 {-# LINE 1 "<built-in>" #-}

@@ -13,7 +13,7 @@ tokens :-
   " "				;
   [\t]				;
   [\r]				;
-  [$alpha] [$alpha $digit]* { \(p,_,_,s) len -> return $ Stmt $ take len s }
+  $alpha $digit* { \(p,_,_,s) len -> return $ Stmt $ take len s }
   "," { \(p,_,_,s) len -> return $ Comma}
   [\n] { \(p,_,_,s) len -> return $ EOLN}
   "|-" { \(p,_,_,s) len -> return $ Turnstile}
