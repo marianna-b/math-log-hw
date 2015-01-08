@@ -1,6 +1,6 @@
 import Syntax
 import Lexer
-import ProofCheckerLib2
+import ProofCheckerLib
 import qualified Data.Map.Strict as M
 
 parseProof :: [String] -> [Expr]

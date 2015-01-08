@@ -1,7 +1,7 @@
 module ApplyDeductionLib where
 
 import Syntax
-import ProofCheckerLib2
+import ProofCheckerLib
 import Debug.Trace
 import qualified Data.Map.Strict as M
 

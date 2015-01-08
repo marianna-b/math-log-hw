@@ -12,7 +12,7 @@ genAppoint s i =
 
 genRefute :: [String] -> Int -> String
 genRefute (s:[]) i = genAppoint s i
-genRefute (s:xs) i = genAppoint s (i `mod` 2) ++ "," ++ genRefute xs (i `div` 2)
+genRefute (s:xs) i = genAppoint s (i `mod` 2) ++ ", " ++ genRefute xs (i `div` 2)
 
 putOut :: [Expr] -> IO ()
 putOut [] = return ()
@@ -22,7 +22,7 @@ putOut (x:xs) = do
 
 putOutProof :: Either ([String], Int) [Expr] -> IO ()
 putOutProof ans = case ans of
- Left (a, b) -> putStrLn $ "Высказывание ложно при" ++ genRefute a b
+ Left (a, b) -> putStrLn $ "Высказывание ложно при " ++ genRefute a b
  Right pr-> putOut pr
 -----------------------------------------------------------------------------
 
