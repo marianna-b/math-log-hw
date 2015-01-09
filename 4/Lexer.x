@@ -13,77 +13,76 @@ tokens :-
   " "				;
   [\t]				;
   [\r]				;
-  [A-Z] $digit* { \(p,_,_,s) len -> return $ PredicatSymb $ take len s }
-  [a-z] $digit* { \(p,_,_,s) len -> return $ Variable $ take len s }
-  "," { \(p,_,_,s) len -> return $ Comma }
-  [\n] { \(p,_,_,s) len -> return $ EOLN }
-  "|-" { \(p,_,_,s) len -> return $ Turnstile }
-  "|" { \(p,_,_,s) len -> return $ BinOr }
-  "&" { \(p,_,_,s) len -> return $ BinAnd }
-  "!" { \(p,_,_,s) len -> return $ Not }
-  "->" { \(p,_,_,s) len -> return $ Implic }
-  "(" { \(p,_,_,s) len -> return $ LeftParen }
-  ")" { \(p,_,_,s) len -> return $ RightParen }
-  "@" { \(p,_,_,s) len -> return $ QuantifierAll }
-  "?" { \(p,_,_,s) len -> return $ QuantifierExists }
-  "=" { \(p,_,_,s) len -> return $ Equality }
-  "+" { \(p,_,_,s) len -> return $ Plus }
-  "*" { \(p,_,_,s) len -> return $ Multiply }
-  "0" { \(p,_,_,s) len -> return $ Zero }
-  "'" { \(p,_,_,s) len -> return $ Apostrophe }
+  [A-Z] $digit* { \(p,_,_,s) len -> return $ TPredicatSymb $ take len s }
+  [a-z] $digit* { \(p,_,_,s) len -> return $ TVariable $ take len s }
+  "," { \(p,_,_,s) len -> return $ TComma }
+  [\n] { \(p,_,_,s) len -> return $ TEOLN }
+  "|-" { \(p,_,_,s) len -> return $ TTurnstile }
+  "|" { \(p,_,_,s) len -> return $ TBinOr }
+  "&" { \(p,_,_,s) len -> return $ TBinAnd }
+  "!" { \(p,_,_,s) len -> return $ TNot }
+  "->" { \(p,_,_,s) len -> return $ TImplic }
+  "(" { \(p,_,_,s) len -> return $ TLeftParen }
+  ")" { \(p,_,_,s) len -> return $ TRightParen }
+  "@" { \(p,_,_,s) len -> return $ TQuantifierAll }
+  "?" { \(p,_,_,s) len -> return $ TQuantifierExists }
+  "=" { \(p,_,_,s) len -> return $ TEquality }
+  "+" { \(p,_,_,s) len -> return $ TPlus }
+  "*" { \(p,_,_,s) len -> return $ TMultiply }
+  "0" { \(p,_,_,s) len -> return $ TZero }
+  "'" { \(p,_,_,s) len -> return $ TApostrophe }
 {
 
-alexEOF = return EOF
+alexEOF = return TEOF
           
 tok str = runAlex str $ do
   let loop = do tok <- alexMonadScan
-                if tok == EOF
+                if tok == TEOF
                         then return []
                         else do toks <- loop
                                 return (tok:toks)
   loop
 
-data Token = Variable String
-           | PredicatSymb String
-           | BinOr
-           | BinAnd
-           | Not
-           | Implic
-           | LeftParen
-           | RightParen
-           | Comma
-           | Turnstile
-           | EOLN
-           | EOF
-           | Apostrophe
-           | Zero
-           | Multiply
-           | Plus
-           | Equality
-           | QuantifierAll
-           | QuantifierExists
+data Token = TVariable String
+           | TPredicatSymb String
+           | TBinOr
+           | TBinAnd
+           | TNot
+           | TImplic
+           | TLeftParen
+           | TRightParen
+           | TComma
+           | TTurnstile
+           | TEOLN
+           | TEOF
+           | TApostrophe
+           | TZero
+           | TMultiply
+           | TPlus
+           | TEquality
+           | TQuantifierAll
+           | TQuantifierExists
            deriving (Eq)
 
 instance Show Token where
   show x = case x of
-    Variable s -> "Var " ++ s
-    PredicatSymb s -> "Predicatsymb " ++ s
-    BinOr -> "|"
-    BinAnd -> "&"
-    Not -> "!"
-    Implic -> "->"
-    LeftParen -> "("
-    RightParen -> ")"
-    Comma -> ","
-    Turnstile -> "|-"
-    EOLN -> "(EOLN)\n"
-    EOF -> "(EOF)"
-    Apostrophe -> "'"
-    Zero -> "0"
-    Multiply -> "*"
-    Plus -> "+"
-    Equality -> "="
-    QuantifierAll -> "@"
-    QuantifierExists -> "?"
-           
+    TVariable s -> "Var " ++ s
+    TPredicatSymb s -> "Predicatsymb " ++ s
+    TBinOr -> "|"
+    TBinAnd -> "&"
+    TNot -> "!"
+    TImplic -> "->"
+    TLeftParen -> "("
+    TRightParen -> ")"
+    TComma -> ","
+    TTurnstile -> "|-"
+    TEOLN -> "(EOLN)\n"
+    TEOF -> "(EOF)"
+    TApostrophe -> "'"
+    TZero -> "0"
+    TMultiply -> "*"
+    TPlus -> "+"
+    TEquality -> "="
+    TQuantifierAll -> "@"
+    TQuantifierExists -> "?"
 }

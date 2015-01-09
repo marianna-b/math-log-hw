@@ -316,78 +316,77 @@ alex_accept = listArray (0::Int,22) [AlexAccNone,AlexAccNone,AlexAccSkip,AlexAcc
 {-# LINE 34 "Lexer.x" #-}
 
 
-alexEOF = return EOF
+alexEOF = return TEOF
           
 tok str = runAlex str $ do
   let loop = do tok <- alexMonadScan
-                if tok == EOF
+                if tok == TEOF
                         then return []
                         else do toks <- loop
                                 return (tok:toks)
   loop
 
-data Token = Variable String
-           | PredicatSymb String
-           | BinOr
-           | BinAnd
-           | Not
-           | Implic
-           | LeftParen
-           | RightParen
-           | Comma
-           | Turnstile
-           | EOLN
-           | EOF
-           | Apostrophe
-           | Zero
-           | Multiply
-           | Plus
-           | Equality
-           | QuantifierAll
-           | QuantifierExists
+data Token = TVariable String
+           | TPredicatSymb String
+           | TBinOr
+           | TBinAnd
+           | TNot
+           | TImplic
+           | TLeftParen
+           | TRightParen
+           | TComma
+           | TTurnstile
+           | TEOLN
+           | TEOF
+           | TApostrophe
+           | TZero
+           | TMultiply
+           | TPlus
+           | TEquality
+           | TQuantifierAll
+           | TQuantifierExists
            deriving (Eq)
 
 instance Show Token where
   show x = case x of
-    Variable s -> "Var " ++ s
-    PredicatSymb s -> "Predicatsymb " ++ s
-    BinOr -> "|"
-    BinAnd -> "&"
-    Not -> "!"
-    Implic -> "->"
-    LeftParen -> "("
-    RightParen -> ")"
-    Comma -> ","
-    Turnstile -> "|-"
-    EOLN -> "(EOLN)\n"
-    EOF -> "(EOF)"
-    Apostrophe -> "'"
-    Zero -> "0"
-    Multiply -> "*"
-    Plus -> "+"
-    Equality -> "="
-    QuantifierAll -> "@"
-    QuantifierExists -> "?"
-           
+    TVariable s -> "Var " ++ s
+    TPredicatSymb s -> "Predicatsymb " ++ s
+    TBinOr -> "|"
+    TBinAnd -> "&"
+    TNot -> "!"
+    TImplic -> "->"
+    TLeftParen -> "("
+    TRightParen -> ")"
+    TComma -> ","
+    TTurnstile -> "|-"
+    TEOLN -> "(EOLN)\n"
+    TEOF -> "(EOF)"
+    TApostrophe -> "'"
+    TZero -> "0"
+    TMultiply -> "*"
+    TPlus -> "+"
+    TEquality -> "="
+    TQuantifierAll -> "@"
+    TQuantifierExists -> "?"
 
-alex_action_3 =  \(p,_,_,s) len -> return $ PredicatSymb $ take len s 
-alex_action_4 =  \(p,_,_,s) len -> return $ Variable $ take len s 
-alex_action_5 =  \(p,_,_,s) len -> return $ Comma 
-alex_action_6 =  \(p,_,_,s) len -> return $ EOLN 
-alex_action_7 =  \(p,_,_,s) len -> return $ Turnstile 
-alex_action_8 =  \(p,_,_,s) len -> return $ BinOr 
-alex_action_9 =  \(p,_,_,s) len -> return $ BinAnd 
-alex_action_10 =  \(p,_,_,s) len -> return $ Not 
-alex_action_11 =  \(p,_,_,s) len -> return $ Implic 
-alex_action_12 =  \(p,_,_,s) len -> return $ LeftParen 
-alex_action_13 =  \(p,_,_,s) len -> return $ RightParen 
-alex_action_14 =  \(p,_,_,s) len -> return $ QuantifierAll 
-alex_action_15 =  \(p,_,_,s) len -> return $ QuantifierExists 
-alex_action_16 =  \(p,_,_,s) len -> return $ Equality 
-alex_action_17 =  \(p,_,_,s) len -> return $ Plus 
-alex_action_18 =  \(p,_,_,s) len -> return $ Multiply 
-alex_action_19 =  \(p,_,_,s) len -> return $ Zero 
-alex_action_20 =  \(p,_,_,s) len -> return $ Apostrophe 
+alex_action_3 =  \(p,_,_,s) len -> return $ TPredicatSymb $ take len s 
+alex_action_4 =  \(p,_,_,s) len -> return $ TVariable $ take len s 
+alex_action_5 =  \(p,_,_,s) len -> return $ TComma 
+alex_action_6 =  \(p,_,_,s) len -> return $ TEOLN 
+alex_action_7 =  \(p,_,_,s) len -> return $ TTurnstile 
+alex_action_8 =  \(p,_,_,s) len -> return $ TBinOr 
+alex_action_9 =  \(p,_,_,s) len -> return $ TBinAnd 
+alex_action_10 =  \(p,_,_,s) len -> return $ TNot 
+alex_action_11 =  \(p,_,_,s) len -> return $ TImplic 
+alex_action_12 =  \(p,_,_,s) len -> return $ TLeftParen 
+alex_action_13 =  \(p,_,_,s) len -> return $ TRightParen 
+alex_action_14 =  \(p,_,_,s) len -> return $ TQuantifierAll 
+alex_action_15 =  \(p,_,_,s) len -> return $ TQuantifierExists 
+alex_action_16 =  \(p,_,_,s) len -> return $ TEquality 
+alex_action_17 =  \(p,_,_,s) len -> return $ TPlus 
+alex_action_18 =  \(p,_,_,s) len -> return $ TMultiply 
+alex_action_19 =  \(p,_,_,s) len -> return $ TZero 
+alex_action_20 =  \(p,_,_,s) len -> return $ TApostrophe 
 {-# LINE 1 "templates/GenericTemplate.hs" #-}
 {-# LINE 1 "templates/GenericTemplate.hs" #-}
 {-# LINE 1 "<built-in>" #-}
