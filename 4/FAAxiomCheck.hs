@@ -48,7 +48,7 @@ sAndFA = liftM2 (&&)
 -- Functions checks if first expression is deduced
 -- by substitutions from the second(axiom)
 matchFA :: Expr -> Expr -> Bool
-matchFA a b = evalState (matcher a b) $ M.fromList []
+matchFA a b = evalState (matcherFA a b) $ M.fromList []
 
 -- Same but monadic function
 matcherFA :: Expr -> Expr -> State VarMap Bool
@@ -83,29 +83,31 @@ termMatcher _ _ = return False
 -------------------------------------------------------------------
 -- Function check s if an expression may be deduced from axioms
 -- using substitution
-checkAxiomsFA :: Expr -> Maybe Int
-checkAxiomsFA e = checkAxioms' axiomsFA e 1
+checkAxiomsFA :: Expr -> Result
+checkAxiomsFA e = checkAxiomsFA' axiomsFA e 1
 
 -- The same as previous but with a number
-checkAxiomsFA' :: [Expr] -> Expr -> Int -> Maybe Int
-checkAxiomsFA' (x:xs) e n = if (match x e)
-                         then Just n
-                         else checkAxioms' xs e $ n + 1
-checkAxiomsFA' [] _ _ = Nothing
+checkAxiomsFA' :: [Expr] -> Expr -> Int -> Result
+checkAxiomsFA' (x:xs) e n = if (matchFA x e)
+                         then Right $ AxiomFA n
+                         else checkAxiomsFA' xs e $ n + 1
+checkAxiomsFA' [] _ _ = Left NoProof
 
 -------------------------------------------------------------------
-checkAxiomFA9 :: Expr -> Result
-checkAxiomFA9 (BinOp Impl (BinOp And f0 (Quantifier Forall x (BinOp Impl fx fx'))) f) =
+checkAxiomFA9 :: Expr -> Expr -> Result
+checkAxiomFA9 (BinOp Impl (BinOp And f0 (Quantifier Forall x (BinOp Impl fx fx'))) f) _ =
   if fx == f then
     case checkIfSubsE x fx f0 of
       Found i -> if not (i == ZeroTerm) then Left NoProof
                  else case checkIfSubsE x fx fx' of
                         Found j ->
                             if j == Apostrophe (Variable x) then
-                                Right $ AxiomFA 9
+                                    Right $ AxiomFA 9
                             else Left NoProof
                         NotFound -> Left NoProof
                         Unknown -> Left NoProof
       NotFound -> Left NoProof
       Unknown -> Left NoProof
   else Left NoProof
+checkAxiomFA9 _ _ = Left NoProof
+-- свободная переменная в допущении и квантор?

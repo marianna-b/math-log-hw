@@ -6,6 +6,7 @@ import Lexer
 
 %name syntDeduct DeductionProof
 %name syntExpr Expr
+%name syntProof ProofList
 %tokentype { Token }
 %monad { Either String } { (>>=) } { return }
 
@@ -39,7 +40,7 @@ exists { TQuantifierExists }
 %left '+'
 %left '*'
 %right exists
-%right forall
+%right foralls
 %left apostr
 %%
 
@@ -62,13 +63,16 @@ Expr '\n' { [$1] }
 | ProofListRev Expr '\n' { $2 : $1 }
 
 Expr:
-'(' Expr ')' { $2 }
-| Expr '->' Expr { BinOp Impl $1 $3 }
+Expr '->' Expr { BinOp Impl $1 $3 }
 | Expr '|' Expr { BinOp Or $1 $3 }
 | Expr '&' Expr { BinOp And $1 $3 }
-| '!' Expr { UnOp UnNot $2 }
-| foralls var Expr { Quantifier Forall $2 $3 }
-| exists var Expr { Quantifier Exists $2 $3 }
+| FinalExpr { $1 }
+
+FinalExpr:
+'(' Expr ')' { $2 }
+| '!' FinalExpr { UnOp UnNot $2 }
+| foralls var FinalExpr { Quantifier Forall $2 $3 }
+| exists var FinalExpr { Quantifier Exists $2 $3 }
 | Term '=' Term { Equals $1 $3 }
 | predicat TermList { PredicateSymb $1 $2 }
 | predicat { PredicateSymb $1 [] }
@@ -122,31 +126,60 @@ instance Show BinOpType where
     Impl -> "->"
 
 data UnOpType = UnNot
-              deriving (Ord, Eq)
+  deriving (Ord, Eq)
 
 instance Show UnOpType where
   show x = "!"
+
 data BinFunType = Plus | Mul
-  deriving (Eq, Ord, Show)
+  deriving (Eq, Ord)
+
+instance Show BinFunType where
+  show x = case x of
+    Plus -> "+"
+    Mul -> "*"
+
 data Term = BinFunction BinFunType Term Term
           | MultiFunction String [Term]
           | ZeroTerm
           | Apostrophe Term
           | Variable String
-  deriving (Eq, Ord, Show)
+  deriving (Eq, Ord)
+
+instance Show Term where
+  show x = case x of
+    ZeroTerm -> "0"
+    Variable v -> v
+    MultiFunction x list -> "(" ++ x ++ "(" ++ (showTermList "," list) ++ "))"
+    BinFunction t a b -> "(" ++ (show a) ++ (show t) ++ (show b) ++ ")"
+    Apostrophe a -> "("++(show a) ++ "')"
+
 data QuType = Forall | Exists
-  deriving (Eq, Ord, Show)
+  deriving (Eq, Ord)
+
+instance Show QuType where
+  show x = case x of
+    Forall -> "@"
+    Exists -> "?"
+
+showTermList :: String -> [Term] -> String
+showTermList _ [] = ""
+showTermList _ (x:[]) = show x
+showTermList c (x:xs) = (show x) ++ c ++ showTermList c xs
 
 data Expr = Equals Term Term
           | PredicateSymb String [Term]
           | Quantifier QuType String Expr 
           | BinOp BinOpType Expr Expr
           | UnOp UnOpType Expr
-  deriving (Eq, Ord, Show)
-{-
+  deriving (Eq, Ord)
+
 instance Show Expr where
   show x = case x of
-    Statement s -> s
+    Equals a b -> "(" ++ (show a) ++ "=" ++  (show b) ++ ")"
+    Quantifier t x e -> "(" ++ (show t) ++ x ++ "(" ++ (show e) ++ "))"
+    PredicateSymb x [] -> x
+    PredicateSymb x list -> "(" ++ x ++ "(" ++ (showTermList "," list) ++ "))"
     BinOp t a b -> "(" ++ (show a) ++ (show t) ++ (show b) ++ ")"
-    UnOp t a -> "("++(show t) ++ (show a) ++ ")" -}
+    UnOp t a -> "("++(show t) ++ (show a) ++ ")"
 }

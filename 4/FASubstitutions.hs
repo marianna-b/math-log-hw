@@ -5,21 +5,33 @@ import Syntax
 data NotProoved = NoProof 
                 | TermNotFree Term Expr String
                 | VarFreeIn String Expr
-                | VarQuantFreeAssump String Expr
+                | VQFreeAssumpInAx String Expr
+                | VQFreeAssumpInRule String Expr
 instance Show NotProoved where
-    show = undefined
-
+  show z = case z of
+   NoProof -> ""
+   TermNotFree x y a ->
+       ": терм " ++ (show x) ++ " не свободен для подстановки в формулу " ++ (show y) ++ " вместо переменной " ++ a ++ "."
+   VarFreeIn a x ->
+     ": переменная " ++ a ++ " входит свободно в формулу " ++ (show x) ++ "."
+   VQFreeAssumpInAx a x ->
+     ": используемтся схема аксиом с квантором по переменной " ++ a ++ ",входящей свободно в допущение " ++ (show x) ++ "."
+   VQFreeAssumpInRule a x ->
+     ": используемтся правило с квантором по переменной " ++ a ++ ",входящей свободно в допущение " ++ (show x) ++ "."
+                           
 data Reason = Axiom Int
             | AxiomFA Int
             | MP Int Int
-            | MPPred Int
+            | ForallMP Int
+            | ExistsMP Int
             | Assumption
             | Alpha
 
 instance Show Reason where
   show a = case a of
     MP x y -> "(M.P. " ++ (show x) ++ ", " ++ (show y) ++ ")"
-    MPPred  x-> "(M.P. " ++ (show x) ++ ")"
+    ForallMP x-> "(M.P. " ++ (show x) ++ ")"
+    ExistsMP x -> "(M.P. " ++ (show x) ++ ")"
     Axiom ax  -> "(Сх. акс. " ++ (show ax) ++ ")"
     AxiomFA ax  -> "(Сх. акс./акс ФА " ++ (show ax) ++ ")"
     Assumption -> "(Из предположения)"

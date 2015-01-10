@@ -78,18 +78,18 @@ matcher _ _ = return False
 -------------------------------------------------------------------
 -- Function check s if an expression may be deduced from axioms
 -- using substitution
-checkAxioms :: Expr -> Maybe Int
+checkAxioms :: Expr -> Result
 checkAxioms e = checkAxioms' axioms e 1
 
 -- The same as previous but with a number
-checkAxioms' :: [Expr] -> Expr -> Int -> Maybe Int
+checkAxioms' :: [Expr] -> Expr -> Int -> Result
 checkAxioms' (x:xs) e n = if (match x e)
-                         then Just n
+                         then Right $ Axiom n
                          else checkAxioms' xs e $ n + 1
-checkAxioms' [] _ _ = Nothing
+checkAxioms' [] _ _ = Left NoProof
 -------------------------------------------------------------------
-checkPAxioms :: Expr -> Result
-checkPAxioms e =
+checkPAxioms :: Expr -> Expr -> Result
+checkPAxioms e _ =
   case checkAxiom11 e of
     Left err -> case checkAxiom12 e of
                   Left NoProof -> Left err
@@ -116,3 +116,4 @@ checkAxiom12 (BinOp Impl a (Quantifier Exists x e)) =
                  Nothing -> Right $ Axiom 12
                  Just err -> Left err
 checkAxiom12 _ = Left NoProof
+-- свободная переменная в допущении и квантор

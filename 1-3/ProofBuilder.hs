@@ -35,7 +35,7 @@ loadProof :: String -> M.Map String Proof -> IO (M.Map String Proof)
 loadProof s proofMap = do
   inp <- readFile $ "atom-proof/" ++ s
   case tok inp >>= syntProof of
-    Left s -> error s
+    Left s1 -> error s1
     Right prf -> return $ M.insert s prf proofMap 
 
 loadProofs :: IO (M.Map String Proof)

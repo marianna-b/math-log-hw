@@ -3,36 +3,41 @@ import Syntax
 import qualified Data.Map.Strict as M
 import FAProofCheckLib 
 import FAApplyDeductionLib
+import FAModusPonens
+import FASubstitutions
+import Debug.Trace
+
+loadProof :: String -> M.Map String Proof -> IO (M.Map String Proof)
+loadProof s proofMap = do
+  inp <- readFile $ "atom-proof/" ++ s
+  case tok inp >>= syntProof of
+    Left s -> error s
+    Right prf -> return $ M.insert s prf proofMap 
 
 getProofMap :: IO ProofMap
-getProofMap = undefined
+getProofMap =
+    loadProof "forall1" M.empty >>=
+    loadProof "forall2" >>=
+    loadProof "exists"
 
 parseInput :: String -> DeductionProof
 parseInput inp = case tok inp >>= syntDeduct of
   Left err -> error err
   Right d -> d
 
-deduct ::  String -> String
-deduct inp = let deductPrf = parseInput inp in
-  case verify $ deductPrf of
-    Left err -> show err
+deduct ::  String -> ProofMap -> String
+deduct inp proofMap =
+  let deductPrf = parseInput inp in
+  case verify $ traceShow deductPrf deductPrf of
+    Left (pos, err) -> "Вывод некорректен начиная с формулы номер " ++ (show pos) ++ (show err) ++ "\n"
     Right newCtx ->
-        case genNewProof deductPrf newCtx of
-          Left err -> show err
-          Right newDeductPrf -> show newDeductPrf
+        show $ genNewProof proofMap deductPrf newCtx 
 
-
-genNewProof :: DeductionProof -> Context -> Either NotProoved DeductionProof
-genNewProof d ctx = case errorDeduct d ctx of
-  Just err -> Left err
-  Nothing -> case applyDeduct d ctx of
-               Left err -> Left err
-               Right newDeduct -> Right newDeduct
-
-
+genNewProof :: ProofMap -> DeductionProof -> Context -> DeductionProof
+genNewProof proofMap d ctx = applyDeduct d ctx proofMap
 
 main :: IO ()
 main = do
   inp <- getContents
   proofMap <- getProofMap
-  putStrLn $ deduct inp
+  putStr $ deduct inp proofMap
