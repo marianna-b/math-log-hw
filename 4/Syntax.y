@@ -4,7 +4,7 @@ module Syntax where
 import Lexer
 }
 
-%name syntDeduct DeductionProof
+%name syntAssump DeductionProof
 %name syntExpr Expr
 %name syntProof ProofList
 %tokentype { Token }
@@ -45,8 +45,8 @@ exists { TQuantifierExists }
 %%
 
 DeductionProof:
-'|-' Expr '\n' ProofList { DeductionProof $2 [] $4 }
-| AssumptionList '|-' Expr '\n' ProofList { DeductionProof $3 $1 $5 }
+'|-' Expr { DeductionProof $2 [] [] }
+| AssumptionList '|-' Expr { DeductionProof $3 $1 [] }
 
 AssumptionList:
 AssumptionListRev { reverse $1 }

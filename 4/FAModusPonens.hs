@@ -3,6 +3,7 @@ module FAModusPonens where
 import Syntax
 import FASubstitutions
 import qualified Data.Map.Strict as M
+import Debug.Trace
 
 data Rule = Rule { expr :: Expr,
                    reason :: Reason }
@@ -82,13 +83,14 @@ findMP mps e = M.lookup e (found mps)
 checkForallMP :: PredMPMap -> String -> Expr -> Expr -> Expr -> Result
 checkForallMP mp x a b alpha =
   let freeVar = freeV [] alpha in
-  let freeVar2 = freeV [] a in
+  let freeVar2 = freeV [] $ trace ("Forall" ++ (show a)) a in
   if elem x freeVar then Left $ VQFreeAssumpInRule x alpha
   else if elem x freeVar2 then
-           case M.lookup (BinOp Impl a b) mp of
-             Nothing -> Left NoProof
-             Just i -> Right $ ForallMP i
-       else Left $ VarFreeIn x a
+         Left $ VarFreeIn x a
+       else 
+         case M.lookup (BinOp Impl a b) mp of
+           Nothing -> Left NoProof
+           Just i -> Right $ ForallMP i
 
 checkExistsMP :: PredMPMap -> String -> Expr -> Expr -> Expr -> Result
 checkExistsMP mp x a b alpha = 
@@ -96,10 +98,11 @@ checkExistsMP mp x a b alpha =
   let freeVar2 = freeV [] b in
   if elem x freeVar then Left $ VQFreeAssumpInRule x alpha
   else if elem x freeVar2 then
-           case M.lookup (BinOp Impl a b) mp of
-             Nothing -> Left NoProof
-             Just i -> Right $ ExistsMP i
-       else Left $ VarFreeIn x b
+         Left $ VarFreeIn x b
+       else 
+         case M.lookup (BinOp Impl a b) mp of
+           Nothing -> Left NoProof
+           Just i -> Right $ ExistsMP i
 
 findPredMP :: PredMPMap -> Expr -> Expr -> Result
 findPredMP mp (BinOp Impl a@(Quantifier Exists x e1) b@(Quantifier Forall y e2)) alpha =
@@ -110,8 +113,8 @@ findPredMP mp (BinOp Impl a@(Quantifier Exists x e1) b@(Quantifier Forall y e2))
                     Left NoProof -> Left err
                     Left err2 -> Left err2
                   
-findPredMP mp (BinOp Impl (Quantifier Exists x e) b) alpha = checkForallMP mp x e b alpha
-findPredMP mp (BinOp Impl a (Quantifier Forall y e)) alpha = checkExistsMP mp y a e alpha
+findPredMP mp (BinOp Impl (Quantifier Exists x e) b) alpha = checkExistsMP mp x e b alpha
+findPredMP mp (BinOp Impl a (Quantifier Forall y e)) alpha = checkForallMP mp y a e alpha
 findPredMP _ _ _ = Left NoProof  
 -------------------------------------------------------------------
 checkMP :: MPsMap -> PredMPMap -> Expr -> Expr -> Result

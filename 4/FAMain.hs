@@ -20,21 +20,39 @@ getProofMap =
     loadProof "forall2" >>=
     loadProof "exists"
 
+parseProof :: [String] -> [Expr]
+parseProof [] = []
+parseProof (x:xs)
+ | x == "" = (parseProof xs)
+ | otherwise = case tok x >>= syntExpr of
+                 Left err -> error err
+                 Right r -> r:(parseProof xs)
+
 parseInput :: String -> DeductionProof
-parseInput inp = case tok inp >>= syntDeduct of
-  Left err -> error err
-  Right d -> d
+parseInput inp =
+  let l = lines inp in
+  let a = head l in
+  case tok a >>= syntAssump of
+    Left err -> error err
+    Right d -> DeductionProof (statement d) (assumption d) $ parseProof $ tail l
 
 deduct ::  String -> ProofMap -> String
 deduct inp proofMap =
   let deductPrf = parseInput inp in
-  case verify $ traceShow deductPrf deductPrf of
+  case verify deductPrf of
     Left (pos, err) -> "Вывод некорректен начиная с формулы номер " ++ (show pos) ++ (show err) ++ "\n"
     Right newCtx ->
         show $ genNewProof proofMap deductPrf newCtx 
 
 genNewProof :: ProofMap -> DeductionProof -> Context -> DeductionProof
 genNewProof proofMap d ctx = applyDeduct d ctx proofMap
+
+putOutCtx :: Context -> String
+putOutCtx [] = ""
+putOutCtx (x:xs) = (show x) ++ "\n" ++ (putOutCtx  xs)
+
+instance Show Rule where
+    show x = (show (expr x)) ++ "   " ++ (show (reason x)) 
 
 main :: IO ()
 main = do

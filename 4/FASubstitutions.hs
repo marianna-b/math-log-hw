@@ -30,8 +30,8 @@ data Reason = Axiom Int
 instance Show Reason where
   show a = case a of
     MP x y -> "(M.P. " ++ (show x) ++ ", " ++ (show y) ++ ")"
-    ForallMP x-> "(M.P. " ++ (show x) ++ ")"
-    ExistsMP x -> "(M.P. " ++ (show x) ++ ")"
+    ForallMP x-> "(M.P. @ " ++ (show x) ++ ")"
+    ExistsMP x -> "(M.P. ? " ++ (show x) ++ ")"
     Axiom ax  -> "(Сх. акс. " ++ (show ax) ++ ")"
     AxiomFA ax  -> "(Сх. акс./акс ФА " ++ (show ax) ++ ")"
     Assumption -> "(Из предположения)"
