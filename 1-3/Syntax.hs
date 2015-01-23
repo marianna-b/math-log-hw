@@ -164,8 +164,7 @@ action_29 _ = happyReduce_11
 action_30 (15) = happyShift action_18
 action_30 (16) = happyShift action_19
 action_30 (18) = happyShift action_20
-action_30 (21) = happyShift action_35
-action_30 _ = happyFail
+action_30 _ = happyReduce_5
 
 action_31 (15) = happyShift action_18
 action_31 (16) = happyShift action_19
@@ -182,16 +181,6 @@ action_33 _ = happyReduce_12
 action_34 (16) = happyShift action_19
 action_34 _ = happyReduce_13
 
-action_35 (14) = happyShift action_6
-action_35 (17) = happyShift action_7
-action_35 (19) = happyShift action_8
-action_35 (11) = happyGoto action_36
-action_35 (12) = happyGoto action_10
-action_35 (13) = happyGoto action_11
-action_35 _ = happyFail
-
-action_36 _ = happyReduce_5
-
 happyReduce_4 = happySpecReduce_2  7 happyReduction_4
 happyReduction_4 _
 	(HappyAbsSyn13  happy_var_1)
@@ -200,16 +189,14 @@ happyReduction_4 _
 	)
 happyReduction_4 _ _  = notHappyAtAll 
 
-happyReduce_5 = happyReduce 5 8 happyReduction_5
-happyReduction_5 ((HappyAbsSyn11  happy_var_5) `HappyStk`
-	_ `HappyStk`
-	(HappyAbsSyn13  happy_var_3) `HappyStk`
-	_ `HappyStk`
-	(HappyAbsSyn9  happy_var_1) `HappyStk`
-	happyRest)
-	 = HappyAbsSyn8
-		 (DeductionProof happy_var_3 happy_var_1 happy_var_5
-	) `HappyStk` happyRest
+happyReduce_5 = happySpecReduce_3  8 happyReduction_5
+happyReduction_5 (HappyAbsSyn13  happy_var_3)
+	_
+	(HappyAbsSyn9  happy_var_1)
+	 =  HappyAbsSyn8
+		 (DeductionProof happy_var_3 happy_var_1 []
+	)
+happyReduction_5 _ _ _  = notHappyAtAll 
 
 happyReduce_6 = happySpecReduce_1  9 happyReduction_6
 happyReduction_6 (HappyAbsSyn10  happy_var_1)
@@ -341,7 +328,7 @@ happyReturn1 = \a tks -> (return) a
 happyError' :: () => [(Token)] -> Either String a
 happyError' = happyError
 
-syntDeduct tks = happySomeParser where
+syntAssump tks = happySomeParser where
   happySomeParser = happyThen (happyParse action_0 tks) (\x -> case x of {HappyAbsSyn8 z -> happyReturn z; _other -> notHappyAtAll })
 
 syntExpr tks = happySomeParser where

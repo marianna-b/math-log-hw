@@ -21,9 +21,16 @@ applyDeduct :: String -> Either String DeductionProof
 applyDeduct s = getDeductedProof $ parseInput s
 
 parseInput :: String -> DeductionProof
-parseInput s = case tok s >>= syntDeduct of
-                 Left err -> error err
-                 Right x -> x
+parseInput inp =
+  let l = lines inp in
+  let a = head l in
+  case tok a >>= syntAssump of
+    Left err -> error err
+    Right d ->
+        case tok (unlines (tail l)) >>=  syntProof of
+          Left e -> error e
+          Right prf ->
+              DeductionProof (statement d) (assumption d) prf
 
 main :: IO ()
 main = do

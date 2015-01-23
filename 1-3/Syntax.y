@@ -3,8 +3,7 @@
 module Syntax where
 import Lexer
 }
-
-%name syntDeduct DeductionProof
+%name syntAssump DeductionProof
 %name syntExpr SingleExpr
 %name syntExprNoEoln Expr
 %name syntProof ProofList
@@ -35,7 +34,7 @@ SingleExpr:
 Expr '\n' { $1 }
 
 DeductionProof:
-AssumptionList '|-' Expr '\n' ProofList { DeductionProof $3 $1 $5 }
+AssumptionList '|-' Expr { DeductionProof $3 $1 [] }
 
 AssumptionList:
 AssumptionListRev { reverse $1 }
