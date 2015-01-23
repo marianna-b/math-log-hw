@@ -31,7 +31,7 @@ parseProof (x:xs)
 parseInput :: String -> DeductionProof
 parseInput inp =
   let l = lines inp in
-  let a = head l in
+  let a = (head l) in
   case tok a >>= syntAssump of
     Left err -> error err
     Right d -> DeductionProof (statement d) (assumption d) $ parseProof $ tail l
@@ -42,7 +42,7 @@ deduct inp proofMap =
   case verify deductPrf of
     Left (pos, err) -> "Вывод некорректен начиная с формулы номер " ++ (show pos) ++ (show err) ++ "\n"
     Right newCtx ->
-        show $ genNewProof proofMap deductPrf $ trace (show newCtx) newCtx 
+        show $ genNewProof proofMap deductPrf $ trace (show (putOutCtx newCtx)) newCtx 
 
 genNewProof :: ProofMap -> DeductionProof -> Context -> DeductionProof
 genNewProof proofMap d ctx = applyDeduct d ctx proofMap

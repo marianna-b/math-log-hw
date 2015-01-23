@@ -20,17 +20,22 @@ buildNewDProof s a assump prf =
 applyDeduct :: String -> Either String DeductionProof
 applyDeduct s = getDeductedProof $ parseInput s
 
+parseProof :: [String] -> [Expr]
+parseProof [] = []
+parseProof (x:xs)
+ | x == "" = (parseProof xs)
+ | otherwise = case tok x >>= syntExpr of
+                 Left err -> error err
+                 Right r -> r:(parseProof xs)
+
+
 parseInput :: String -> DeductionProof
 parseInput inp =
   let l = lines inp in
   let a = head l in
   case tok a >>= syntAssump of
     Left err -> error err
-    Right d ->
-        case tok (unlines (tail l)) >>=  syntProof of
-          Left e -> error e
-          Right prf ->
-              DeductionProof (statement d) (assumption d) prf
+    Right d -> DeductionProof (statement d) (assumption d) $ parseProof $ tail l
 
 main :: IO ()
 main = do
