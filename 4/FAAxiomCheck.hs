@@ -88,7 +88,7 @@ checkAxiomsFA e = checkAxiomsFA' axiomsFA e 1
 
 -- The same as previous but with a number
 checkAxiomsFA' :: [Expr] -> Expr -> Int -> Result
-checkAxiomsFA' (x:xs) e n = if (matchFA x e)
+checkAxiomsFA' (x:xs) e n = if (x == e)
                          then Right $ AxiomFA n
                          else checkAxiomsFA' xs e $ n + 1
 checkAxiomsFA' [] _ _ = Left NoProof
