@@ -1,6 +1,7 @@
 module FASubstitutions where
 
 import Syntax
+import Debug.Trace
 
 data NotProoved = NoProof 
                 | TermNotFree Term Expr String
@@ -40,6 +41,7 @@ instance Show Reason where
 type Result = Either NotProoved Reason
 
 data SubRes = Found Term | Unknown | NotFound
+            deriving (Show, Eq)
 
 (<&&>) :: SubRes -> SubRes -> SubRes
 (<&&>) Unknown b = b 
@@ -78,7 +80,7 @@ checkIfSubsT _ _ _ = NotFound
 
 checkIfSubsTL :: String -> [Term] -> [Term] -> SubRes
 checkIfSubsTL x y z =
-    if (length y) == (length x) then
+    if (length (trace (show y) y)) == (length (trace (show z) z)) then
       checkIfSubsTL' Unknown x y z
     else
       NotFound
@@ -90,10 +92,10 @@ checkIfSubsTL' r x (y:ys) (z:zs) =
 
 checkIfSubsE :: String -> Expr -> Expr -> SubRes
 checkIfSubsE x (BinOp t1 a1 b1) (BinOp t2 a2 b2) 
-  | t1 == t2 = 
+  | (trace (show t1) t1) == (trace (show t2) t2) = 
       let r1 = checkIfSubsE x a1 a2 in
       let r2 = checkIfSubsE x b1 b2 in
-      r1 <&&> r2
+      (trace (show r1) r1) <&&> (trace (show r2) r2)
   | otherwise = NotFound
 checkIfSubsE x (UnOp UnNot a) (UnOp UnNot b) = 
   checkIfSubsE x a b
@@ -108,7 +110,7 @@ checkIfSubsE x (Equals a1 b1) (Equals a2 b2) =
     let r2 = checkIfSubsT x b1 b2 in
     r1 <&&> r2
 checkIfSubsE x (PredicateSymb s1 l1) (PredicateSymb s2 l2) =
-  if s1 == s2 then checkIfSubsTL x l1 l2 else NotFound
+  if (trace (show s1) s1) == (trace (show s2) s2) then checkIfSubsTL x l1 l2 else NotFound
 checkIfSubsE _ _ _ = NotFound
 
 checkFreeToSub :: Expr -> String -> Term -> Maybe NotProoved

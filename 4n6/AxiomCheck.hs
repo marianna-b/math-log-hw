@@ -5,6 +5,7 @@ import Lexer
 import qualified Data.Map.Strict as M
 import Control.Monad.State
 import FASubstitutions
+import Debug.Trace
 
 type StmtMap = M.Map String Expr
 
@@ -99,7 +100,7 @@ checkPAxioms e _ =
 
 checkAxiom11 :: Expr -> Result
 checkAxiom11 (BinOp Impl (Quantifier Forall x e) b) =
-  case checkIfSubsE x e b of
+  case checkIfSubsE (trace (show x) x) (trace (show e) e) (trace (show b) b) of
     NotFound -> Left NoProof
     Unknown -> Right $ Axiom 11
     Found y -> case checkFreeToSub e x y of

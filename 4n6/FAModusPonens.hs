@@ -106,7 +106,7 @@ checkExistsMP mp x a b alpha =
 
 findPredMP :: PredMPMap -> Expr -> Expr -> Result
 findPredMP mp (BinOp Impl a@(Quantifier Exists x e1) b@(Quantifier Forall y e2)) alpha =
-    case checkForallMP mp y a e2 alpha of
+    case checkForallMP mp y a e2 (trace (show alpha) alpha) of
       Right r1 -> Right r1
       Left err -> case checkExistsMP mp x e1 b alpha of
                     Right r2 -> Right r2
