@@ -1,0 +1,6 @@
+@xF(x)|-G|F(x)
+@xF(x)->F(x)
+@xF(x)
+F(x)
+F(x)->G|F(x)
+G|F(x)
