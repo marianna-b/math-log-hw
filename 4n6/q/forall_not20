@@ -1,8 +1,0 @@
-!F(x)|-!@xF(x)
-@xF(x)->F(x)
-!F(x)->@xF(x)->!F(x)
-!F(x)
-@xF(x)->!F(x)
-(@xF(x)->F(x))->(@xF(x)->!F(x))->!@xF(x)
-(@xF(x)->!F(x))->!@xF(x)
-!@xF(x)

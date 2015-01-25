@@ -1,6 +1,0 @@
-(G->F(x)),G|-?xF(x)
-G->F(x)
-G
-F(x)
-F(x)->?xF(x)
-?xF(x)
