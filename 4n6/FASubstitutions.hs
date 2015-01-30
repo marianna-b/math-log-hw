@@ -16,7 +16,7 @@ instance Show NotProoved where
    VarFreeIn a x ->
      ": переменная " ++ a ++ " входит свободно в формулу " ++ (show x) ++ "."
    VQFreeAssumpInAx a x ->
-     ": используемтся схема аксиом с квантором по переменной " ++ a ++ ",входящей свободно в допущение " ++ (show x) ++ "."
+     ": используемтся схема аксиом с квантором по переменной " ++ a ++ ", входящей свободно в допущение " ++ (show x) ++ "."
    VQFreeAssumpInRule a x ->
      ": используемтся правило с квантором по переменной " ++ a ++ ",входящей свободно в допущение " ++ (show x) ++ "."
                            
@@ -128,7 +128,10 @@ hasIntersect (x:xs) y = if elem x y then
 
 checkVFree :: [String] -> Expr -> String -> [String] -> Bool
 checkVFree v (Quantifier _ s e) x f =
-  checkVFree (s:v) e x f
+    if (s == x) then
+       True
+    else
+       checkVFree (s:v) e x f
 checkVFree v (BinOp _ a b) x f =
     let r1 = checkVFree v a x f in
     let r2 = checkVFree v b x f in
