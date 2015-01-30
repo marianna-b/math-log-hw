@@ -772,12 +772,12 @@ data Expr = Equals Term Term
 
 instance Show Expr where
   show x = case x of
-    Equals a b -> "(" ++ (show a) ++ "=" ++  (show b) ++ ")"
-    Quantifier t x e -> "(" ++ (show t) ++ x ++ "(" ++ (show e) ++ "))"
+    Equals a b -> (show a) ++ "=" ++  (show b)
+    Quantifier t x e -> (show t) ++ x ++ (show e)
     PredicateSymb x [] -> x
-    PredicateSymb x list -> "(" ++ x ++ "(" ++ (showTermList "," list) ++ "))"
+    PredicateSymb x list -> x ++ "(" ++ (showTermList "," list) ++ ")"
     BinOp t a b -> "(" ++ (show a) ++ (show t) ++ (show b) ++ ")"
-    UnOp t a -> "("++(show t) ++ (show a) ++ ")"
+    UnOp t a -> (show t) ++ (show a)
 {-# LINE 1 "templates/GenericTemplate.hs" #-}
 {-# LINE 1 "templates/GenericTemplate.hs" #-}
 {-# LINE 1 "<built-in>" #-}
