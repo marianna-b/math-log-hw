@@ -4,6 +4,7 @@ import Syntax
 import FAProofCheckLib 
 import FAApplyDeductionLib
 import FAModusPonens
+import FASubstitutions
 import ProofsQuantifiers
 
 data ResultOutQ = ResultOutQ {
@@ -31,7 +32,7 @@ outQ = undefined
 
 getOutQuantDeduct :: ProofMap -> Expr -> DeductionProof
 getOutQuantDeduct proofMap e =
-    let frees = freeV e in
+    let frees = freeV [] e in
     let mapQuant = getMapOfQuant e in
     let result = outQ frees mapQuant e in
-    if 
+    DeductionProof (inExpr result) [(outExpr result)] (eqProof result)
