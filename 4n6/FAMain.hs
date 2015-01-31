@@ -4,7 +4,6 @@ import qualified Data.Map.Strict as M
 import FAProofCheckLib 
 import FAApplyDeductionLib
 import FAModusPonens
-import FASubstitutions
 import Debug.Trace
 
 loadProof :: String -> M.Map String Proof -> IO (M.Map String Proof)
