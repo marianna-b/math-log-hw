@@ -9,9 +9,7 @@ import Debug.Trace
 loadProof :: String -> M.Map String Proof -> IO (M.Map String Proof)
 loadProof s proofMap = do
   inp <- readFile $ "atom-proof/" ++ s
-  case tok inp >>= syntProof of
-    Left s -> error s
-    Right prf -> return $ M.insert s prf proofMap 
+  return $ M.insert s (parseProof (lines inp)) proofMap 
 
 getProofMap :: IO ProofMap
 getProofMap =
