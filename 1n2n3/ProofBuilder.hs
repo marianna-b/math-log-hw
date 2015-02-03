@@ -2,6 +2,7 @@ import ProofBuilderLib
 import Syntax
 import Lexer
 import FastExpr
+import Debug.Trace
 import qualified Data.Map.Strict as M
 import qualified Data.ByteString.Char8 as B
 
@@ -26,17 +27,24 @@ putOutProof ans = case ans of
  Right pr-> putOut pr
 -----------------------------------------------------------------------------
 
+parseProof :: [String] -> [Expr]
+parseProof [] = []
+parseProof (x:xs)
+ | x == "" = (parseProof xs)
+ | otherwise = case tok x >>= syntExprNoEoln of
+                 Left err -> error err
+                 Right r -> r:(parseProof xs)
+
+
 parseExpr :: String -> Expr
-parseExpr s = case tok s >>= syntExpr of
+parseExpr s = case tok s >>= syntExprNoEoln of
   Left err -> error err
   Right e -> e
 
 loadProof :: String -> M.Map String Proof -> IO (M.Map String Proof)
 loadProof s proofMap = do
   inp <- readFile $ "atom-proof/" ++ s
-  case tok inp >>= syntProof of
-    Left s1 -> error s1
-    Right prf -> return $ M.insert s prf proofMap 
+  return $ M.insert s (parseProof (lines inp)) proofMap 
 
 loadProofs :: IO (M.Map String Proof)
 loadProofs = loadProof "and00" M.empty >>=
@@ -60,4 +68,4 @@ main :: IO ()
 main = do
   input <- getContents
   proofMap <- loadProofs
-  putOutProof $ getProof proofMap $ parseExpr input
+  putOutProof $ getProof proofMap $ parseExpr $ head $ lines $ input
