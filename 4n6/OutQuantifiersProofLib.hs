@@ -22,8 +22,8 @@ getMapOfQuant m _ = m
 
 getOutQuantDeduct :: ProofMap -> Expr -> DeductionProof
 getOutQuantDeduct proofMap e =
-    let frees = trace "FV" $ freeV [] e in
-    let mapQuant = trace "QMap" $ getMapOfQuant M.empty e in
+    let frees = freeV [] e in
+    let mapQuant = getMapOfQuant M.empty e in
     let result = outQ proofMap frees mapQuant e in
     DeductionProof (outExpr result) [(inExpr result)] (eqProof result ++ [inExpr result, outExpr result])
 

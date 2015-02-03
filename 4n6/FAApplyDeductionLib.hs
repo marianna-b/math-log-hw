@@ -24,7 +24,7 @@ newProof proofMap ctx a (x:xs) =
    Alpha -> (getSelfImplProof a) ++ fwd
    MP q _ ->  (getMPProof a (expr (ctx !! (q - 1))) e) ++ fwd
    ExistsMP q -> (getExistsMPProof a proofMap (expr (ctx !! (q - 1))) e) ++ fwd
-   ForallMP q -> trace (show e) (getForallMPProof a proofMap (trace (show (expr (ctx !! (q - 1)))) (expr (ctx !! (q - 1)))) (trace (show e) e)) ++ fwd
+   ForallMP q -> (getForallMPProof a proofMap (expr (ctx !! (q - 1))) e) ++ fwd
    AxiomFA _  -> [e, subAx 1 [("A", e), ("B", a)], a ~> e] ++ fwd
 
 

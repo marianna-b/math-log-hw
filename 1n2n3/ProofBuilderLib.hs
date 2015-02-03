@@ -1,9 +1,7 @@
 module ProofBuilderLib where
 
 import Syntax
-import Lexer
 import Data.List
-import System.IO.Unsafe
 import ApplyDeductionLib
 import qualified Data.Map.Strict as M
 

@@ -17,7 +17,6 @@ getNewProof:: Expr -> [Expr] -> [Expr] -> Either String [Expr]
 getNewProof a assump prf =
   let mps = MPsMap M.empty M.empty M.empty in
   let ctx = (getDeductCtx mps [] prf a assump) in
-  --if trace (show ctx) $ checkDeductProof ctx then
   if checkDeductProof ctx then
     Right $ reProofDeduct ctx a ctx
   else

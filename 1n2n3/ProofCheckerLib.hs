@@ -3,8 +3,6 @@ module ProofCheckerLib where
 import Lexer
 import Syntax
 import Control.Monad.State
-import Data.Functor
-import Debug.Trace
 import qualified Data.Map.Strict as M
 
 data Reason = ModusPonens Int Int

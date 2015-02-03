@@ -83,7 +83,7 @@ findMP mps e = M.lookup e (found mps)
 checkForallMP :: PredMPMap -> String -> Expr -> Expr -> Expr -> Result
 checkForallMP mp x a b alpha =
   let freeVar = freeV [] alpha in
-  let freeVar2 = freeV [] $ trace ("Forall" ++ (show a)) a in
+  let freeVar2 = freeV [] a in
   if elem x freeVar then Left $ VQFreeAssumpInRule x alpha
   else if elem x freeVar2 then
          Left $ VarFreeIn x a
@@ -106,7 +106,7 @@ checkExistsMP mp x a b alpha =
 
 findPredMP :: PredMPMap -> Expr -> Expr -> Result
 findPredMP mp (BinOp Impl a@(Quantifier Exists x e1) b@(Quantifier Forall y e2)) alpha =
-    case checkForallMP mp y a e2 (trace (show alpha) alpha) of
+    case checkForallMP mp y a e2 alpha of
       Right r1 -> Right r1
       Left err -> case checkExistsMP mp x e1 b alpha of
                     Right r2 -> Right r2
