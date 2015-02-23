@@ -25,7 +25,7 @@ getOutQuantDeduct proofMap e =
     let frees = freeV [] e in
     let mapQuant = getMapOfQuant M.empty e in
     let result = outQ proofMap frees mapQuant e in
-    DeductionProof (outExpr result) [] (eqProof result)
+    DeductionProof ((inExpr result)~>(outExpr result)) [] (eqProof result)
 
 ----------------------------------------------------------------------------------------------------------------------------
 
