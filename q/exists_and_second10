@@ -1,0 +1,8 @@
+G,?xF(x),F(x)|-?x(G&F(x))
+G->F(x)->G&F(x)
+G
+F(x)->G&F(x)
+F(x)
+G&F(x)
+G&F(x)->?x(G&F(x))
+?x(G&F(x))

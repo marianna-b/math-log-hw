@@ -1,0 +1,8 @@
+@xF(x) |- @yF(y)
+@xF(x)
+@xF(x)->F(y)
+F(y)
+F(y)->@xF(x)->F(y)
+@xF(x)->F(y)
+@xF(x)->@yF(y)
+@yF(y)

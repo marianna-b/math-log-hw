@@ -1,0 +1,11 @@
+F(x)&G|-?xF(x)&G
+F(x)&G->G
+F(x)&G->F(x)
+F(x)&G
+G
+F(x)
+F(x)->?xF(x)
+?xF(x)
+?xF(x)->G->?xF(x)&G
+G->?xF(x)&G
+?xF(x)&G
